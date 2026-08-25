@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ ថ្នាក់ទី១-១២</title>
+    <style>
+        body { font-family: 'Khmer OS Battambang', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #1a73e8; }
+        .screen { display: none; }
+        .active { display: block; }
+        .grid-grades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        button { background-color: #1a73e8; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: inherit; margin-top: 10px; }
+        button:hover { background-color: #1557b0; }
+        .btn-print { background-color: #ff9800; width: 100%; margin-bottom: 10px; }
+        .btn-print:hover { background-color: #e68a00; }
+        #timer { font-size: 20px; color: red; font-weight: bold; text-align: right; margin-bottom: 20px; }
+        .question-box { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #1a73e8; page-break-inside: avoid; }
+        .options-box label { display: block; background: white; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; }
+        .options-box input { margin-right: 10px; }
+        .result-score { font-size: 24px; color: green; text-align: center; font-weight: bold; }
+
+        /* កូដកំណត់ទម្រង់ពិសេសសម្រាប់ព្រីនសន្លឹក A4 */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            button, #timer { display: none !important; } /* លាក់ប៊ូតុង និងនាឡិកាពេលព្រីន */
+            .question-box { background: none; border-left: none; border-bottom: 1px dashed #ccc; padding: 10px 0; }
+            .options-box label { border: none; padding: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- អេក្រង់ទី១៖ ជ្រើសរើសថ្នាក់ -->
+    <div id="grade-screen" class="screen active">
+        <h1>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ (៣០ នាទី)</h1>
+        <p style="text-align:center;">សូមជ្រើសរើសថ្នាក់របស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើលំហាត់ចៃដន្យ៖</p>
+        <div class="grid-grades" id="grades-list"></div>
+    </div>
+
+    <!-- អេក្រង់ទី២៖ ធ្វើលំហាត់ -->
+    <div id="quiz-screen" class="screen">
+        <div id="timer">ពេលវេលានៅសល់៖ 30:00</div>
+        <h2 id="quiz-title">វិញ្ញាសាគណិតវិទ្យា</h2>
+        
+        <!-- ប៊ូតុងព្រីន -->
+        <button onclick="window.print()" class="btn-print">🖨️ ព្រីនវិញ្ញាសានេះ ឬរក្សាទុកជា PDF (A4)</button>
+        
+        <div id="questions-container"></div>
+        <button onclick="submitQuiz()" style="width: 100%; margin-top: 20px;">ប្រគល់កិច្ចការ (Submit)</button>
+    </div>
+
+    <!-- អេក្រង់ទី៣៖ បង្ហាញលទ្ធផល -->
+    <div id="result-screen" class="screen">
+        <h2>លទ្ធផលនៃការធ្វើលំហាត់</h2>
+        <div class="result-score" id="score-text"></div>
+        <div id="review-container" style="margin-top:20px;"></div>
+        <button onclick="location.reload()" style="width: 100%; margin-top: 20px; background-color: #34a853;">ធ្វើម្តងទៀត (លំហាត់ថ្មី)</button>
+    </div>
+</div>
+
+<script>
+const quizDatabase = {
+    1: [
+        { q: "តើ 5 + 3 ស្មើនឹងប៉ុន្មាន?", a: ["6", "7", "8", "9"], correct: 2 },
+        { q: "តើ លេខណាធំជាងគេ?", a: ["12", "45", "23", "9"], correct: 1 },
+        { q: "តើ 10 - 4 ស្មើនឹងប៉ុន្មាន?", a: ["5", "6", "7", "8"], correct: 1 }
+    ],
+    7: [
+        { q: "គណនាតម្លៃនៃ x បើ 2x + 5 = 15?", a: ["x = 5", "x = 10", "x = 4", "x = 3"], correct: 0 },
+        { q: "រកផ្ទៃក្រឡាត្រីកោណដែលមានបាត 6cm និងកម្ពស់ 4cm?", a: ["24 cm²", "12 cm²", "10 cm²", "8 cm²"], correct: 1 }
+    ],
+    12: [
+        { q: "រកដេរីវេនៃអនុគមន៍ f(x) = x² + 3x?", a: ["2x", "2x + 3", "x + 3", "3x"], correct: 1 },
+        { q: "គណនាលីមីត lim (x->2) (x² - 4)/(x - 2)?", a: ["0", "2", "4", "អនន្ត"], correct: 2 }
+    ]
+};
+
+let currentQuestions = [];
+let countdown;
+let timeLeft = 30 * 60; 
+
+const gradesList = document.getElementById('grades-list');
+for (let i = 1; i <= 12; i++) {
+    let btn = document.createElement('button');
+    btn.innerText = `ថ្នាក់ទី ${i}`;
+    btn.onclick = () => startQuiz(i);
+    gradesList.appendChild(btn);
+}
+
+function startQuiz(grade) {
+    let allGradeQuestions = quizDatabase[grade] || [];
+    if (allGradeQuestions.length === 0) {
+        alert("លំហាត់សម្រាប់ថ្នាក់នេះកំពុងរៀបចំ... សូមសាកល្បងថ្នាក់ទី ១, ៧ ឬ ១២!");
+        return;
+    }
+    currentQuestions = allGradeQuestions.sort(() => 0.5 - Math.random()).slice(0, 5);
+    document.getElementById('grade-screen').classList.remove('active');
+    document.getElementById('quiz-screen').classList.add('active');
+    document.getElementById('quiz-title').innerText = `វិញ្ញាសាគណិតវិទ្យា - ថ្នាក់ទី ${grade}`;
+    renderQuestions();
+    startTimer();
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questions-container');
+    container.innerHTML = "";
+    currentQuestions.forEach((q, qIndex) => {
+        let qDiv = document.createElement('div');
+        qDiv.className = 'question-box';
+        qDiv.innerHTML = `<p><strong>លំហាត់ទី ${qIndex + 1}: ${q.q}</strong></p>`;
+        let optDiv = document.createElement('div');
+        optDiv.className = 'options-box';
+        q.a.forEach((opt, oIndex) => {
+            optDiv.innerHTML += `<label><input type="radio" name="q_${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        qDiv.appendChild(optDiv);
+        container.appendChild(qDiv);
+    });
+}
+
+function startTimer() {
+    countdown = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            alert("អស់ម៉ោងហើយ!");
+            submitQuiz();
+        } else {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer').innerText = `ពេលវេលានៅសល់៖ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+    }, 1000);
+}
+
+function submitQuiz() {
+    clearInterval(countdown);
+    let score = 0;
+    let reviewHtml = "";
+    currentQuestions.forEach((q, qIndex) => {
+        let selected = document.querySelector(`input[name="q_${qIndex}"]:checked`);
+        let userAns = selected ? parseInt(selected.value) : -1;
+        if (userAns === q.correct) {
+            score++;
+            reviewHtml += `<p style="color:green;">✔️ លំហាត់ទី ${qIndex+1}៖ ត្រឹមត្រូវ! (ចម្លើយ៖ ${q.a[q.correct]})</p>`;
+        } else {
+            reviewHtml += `<p style="color:red;">❌ លំហាត់ទី ${qIndex+1}៖ ខុសហើយ! (ចម្លើយត្រូវគឺ៖ ${q.a[q.correct]})</p>`;
+        }
+    });
+    document.getElementById('quiz-screen').classList.remove('active');
+    document.getElementById('result-screen').classList.add('active');
+    document.getElementById('score-text').innerText = `អ្នកទទួលបានពិន្ទុ៖ ${score} / ${currentQuestions.length}`;
+    document.getElementById('review-container').innerHTML = reviewHtml;
+}
+</script>
+</body>
+</html>
