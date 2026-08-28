@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ ថ្នាក់ទី១-១២</title>
+    <title>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ ថ្នាក់ទី១-១២ (១០០ វិញ្ញាសា)</title>
     <style>
         body { font-family: 'Khmer OS Battambang', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h1, h2 { text-align: center; color: #1a73e8; }
         .screen { display: none; }
         .active { display: block; }
@@ -15,17 +15,16 @@
         button:hover { background-color: #1557b0; }
         .btn-print { background-color: #ff9800; width: 100%; margin-bottom: 10px; }
         .btn-print:hover { background-color: #e68a00; }
-        #timer { font-size: 20px; color: red; font-weight: bold; text-align: right; margin-bottom: 20px; }
+        #timer { font-size: 22px; color: red; font-weight: bold; text-align: right; margin-bottom: 20px; position: sticky; top: 10px; background: white; padding: 5px 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .question-box { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #1a73e8; page-break-inside: avoid; }
         .options-box label { display: block; background: white; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; }
         .options-box input { margin-right: 10px; }
         .result-score { font-size: 24px; color: green; text-align: center; font-weight: bold; }
 
-        /* កូដកំណត់ទម្រង់ពិសេសសម្រាប់ព្រីនសន្លឹក A4 */
         @media print {
             body { background: white; padding: 0; }
             .container { box-shadow: none; max-width: 100%; padding: 0; }
-            button, #timer { display: none !important; } /* លាក់ប៊ូតុង និងនាឡិកាពេលព្រីន */
+            button, #timer { display: none !important; }
             .question-box { background: none; border-left: none; border-bottom: 1px dashed #ccc; padding: 10px 0; }
             .options-box label { border: none; padding: 5px 0; }
         }
@@ -36,8 +35,8 @@
 <div class="container">
     <!-- អេក្រង់ទី១៖ ជ្រើសរើសថ្នាក់ -->
     <div id="grade-screen" class="screen active">
-        <h1>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ (៣០ នាទី)</h1>
-        <p style="text-align:center;">សូមជ្រើសរើសថ្នាក់របស់អ្នក ដើម្បីចាប់ផ្តើមធ្វើលំហាត់ចៃដន្យ៖</p>
+        <h1>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ (១០០ វិញ្ញាសា - ៣០ នាទី)</h1>
+        <p style="text-align:center;">សូមជ្រើសរើសថ្នាក់របស់អ្នក ដើម្បីចាប់ផ្តើមប្រឡង៖</p>
         <div class="grid-grades" id="grades-list"></div>
     </div>
 
@@ -46,42 +45,120 @@
         <div id="timer">ពេលវេលានៅសល់៖ 30:00</div>
         <h2 id="quiz-title">វិញ្ញាសាគណិតវិទ្យា</h2>
         
-        <!-- ប៊ូតុងព្រីន -->
         <button onclick="window.print()" class="btn-print">🖨️ ព្រីនវិញ្ញាសានេះ ឬរក្សាទុកជា PDF (A4)</button>
         
         <div id="questions-container"></div>
-        <button onclick="submitQuiz()" style="width: 100%; margin-top: 20px;">ប្រគល់កិច្ចការ (Submit)</button>
+        <button onclick="submitQuiz()" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 18px;">ប្រគល់កិច្ចការ (Submit)</button>
     </div>
 
     <!-- អេក្រង់ទី៣៖ បង្ហាញលទ្ធផល -->
     <div id="result-screen" class="screen">
         <h2>លទ្ធផលនៃការធ្វើលំហាត់</h2>
         <div class="result-score" id="score-text"></div>
-        <div id="review-container" style="margin-top:20px;"></div>
-        <button onclick="location.reload()" style="width: 100%; margin-top: 20px; background-color: #34a853;">ធ្វើម្តងទៀត (លំហាត់ថ្មី)</button>
+        <div id="review-container" style="margin-top:20px; max-height: 500px; overflow-y: auto;"></div>
+        <button onclick="location.reload()" style="width: 100%; margin-top: 20px; background-color: #34a853; padding: 15px; font-size: 18px;">ធ្វើម្តងទៀត (លំហាត់ថ្មី)</button>
     </div>
 </div>
 
 <script>
-const quizDatabase = {
-    1: [
-        { q: "តើ 5 + 3 ស្មើនឹងប៉ុន្មាន?", a: ["6", "7", "8", "9"], correct: 2 },
-        { q: "តើ លេខណាធំជាងគេ?", a: ["12", "45", "23", "9"], correct: 1 },
-        { q: "តើ 10 - 4 ស្មើនឹងប៉ុន្មាន?", a: ["5", "6", "7", "8"], correct: 1 }
-    ],
-    7: [
-        { q: "គណនាតម្លៃនៃ x បើ 2x + 5 = 15?", a: ["x = 5", "x = 10", "x = 4", "x = 3"], correct: 0 },
-        { q: "រកផ្ទៃក្រឡាត្រីកោណដែលមានបាត 6cm និងកម្ពស់ 4cm?", a: ["24 cm²", "12 cm²", "10 cm²", "8 cm²"], correct: 1 }
-    ],
-    12: [
-        { q: "រកដេរីវេនៃអនុគមន៍ f(x) = x² + 3x?", a: ["2x", "2x + 3", "x + 3", "3x"], correct: 1 },
-        { q: "គណនាលីមីត lim (x->2) (x² - 4)/(x - 2)?", a: ["0", "2", "4", "អនន្ត"], correct: 2 }
-    ]
-};
+// បង្កើតលំហាត់ ១០០ សំណួរស្វ័យប្រវត្តិតាមថ្នាក់នីមួយៗ (ថ្នាក់ទី ១-១២)
+function generateQuestions(grade) {
+    let questions = [];
+    for (let i = 1; i <= 100; i++) {
+        let q = "", a = [], correct = 0;
+
+        if (grade === 1) { // ថ្នាក់ទី ១: ប្រមាណវិធីបូក ដក ទំហំតូចៗ
+            let num1 = Math.floor(Math.random() * 20) + 1;
+            let num2 = Math.floor(Math.random() * 20) + 1;
+            let isAdd = Math.random() > 0.5;
+            if (isAdd) {
+                q = `តើ ${num1} + ${num2} ស្មើនឹងប៉ុន្មាន?`;
+                let ans = num1 + num2;
+                a = [ans.toString(), (ans + 2).toString(), (ans - 1).toString(), (ans + 5).toString()];
+            } else {
+                let max = Math.max(num1, num2);
+                let min = Math.min(num1, num2);
+                q = `តើ ${max} - ${min} ស្មើនឹងប៉ុន្មាន?`;
+                let ans = max - min;
+                a = [ans.toString(), (ans + 1).toString(), (ans + 3).toString(), (ans - 2 < 0 ? 0 : ans - 2).toString()];
+            }
+        } else if (grade === 2) { // ថ្នាក់ទី ២: ប្រមាណវិធីគុណតូចៗ និងបូកដកលេខ ២ ខ្ទង់
+            let num1 = Math.floor(Math.random() * 50) + 10;
+            let num2 = Math.floor(Math.random() * 40) + 5;
+            q = `តើ ${num1} + ${num2} ស្មើនឹងប៉ុន្មាន?`;
+            let ans = num1 + num2;
+            a = [ans.toString(), (ans + 10).toString(), (ans - 5).toString(), (ans + 2).toString()];
+        } else if (grade === 3) { // ថ្នាក់ទី ៣: មេលេខ គុណ និងចែក
+            let n1 = Math.floor(Math.random() * 9) + 2;
+            let n2 = Math.floor(Math.random() * 9) + 2;
+            q = `តើ ${n1} × ${n2} ស្មើនឹងប៉ុន្មាន?`;
+            let ans = n1 * n2;
+            a = [ans.toString(), (ans + 4).toString(), (ans - 3).toString(), (ans + 10).toString()];
+        } else if (grade === 4) { // ថ្នាក់ទី ៤: ប្រភាគ និងប្រមាណវិធីលាយ
+            let a1 = i, b1 = i + 2;
+            q = `រកតម្លៃប្រភាគស្មើគ្នានៃ ${i}/${i+1}`;
+            let ans = `${i*2}/${(i+1)*2}`;
+            a = [ans, `${i*2+1}/${(i+1)*2}`, `${i*2}/${(i+1)*2+1}`, `${i}/${i+3}`];
+        } else if (grade === 5) { // ថ្នាក់ទី ៥: ចំនួនទសភាគ និងភាគរយ
+            let val = Math.floor(Math.random() * 90) + 10;
+            q = `គណនា ${val}% នៃ ១០០?`;
+            let ans = val;
+            a = [ans.toString(), (ans/10).toString(), (ans*2).toString(), (ans+15).toString()];
+        } else if (grade === 6) { // ថ្នាក់ទី ៦: ផ្ទៃក្រឡារូបធរណីមាត្រ និងបរិមាត្រ
+            let base = Math.floor(Math.random() * 10) + 2;
+            let height = Math.floor(Math.random() * 10) + 2;
+            q = `រកផ្ទៃក្រឡាចតុកោណកែងដែលមានប្រវែងបណ្តោយ ${base}cm និងទទឹង ${height}cm?`;
+            let ans = base * height;
+            a = [`${ans} cm²`, `${ans * 2} cm²`, `${ans + 5} cm²`, `${ans - 2} cm²`];
+        } else if (grade === 7) { // ថ្នាក់ទី ៧: សមីការដឺក្រេទី១
+            let a_val = Math.floor(Math.random() * 5) + 1;
+            let b_val = Math.floor(Math.random() * 20) + 1;
+            let x_val = Math.floor(Math.random() * 10) + 1;
+            let c_val = a_val * x_val + b_val;
+            q = `គណនាតម្លៃនៃ x បើ ${a_val}x + ${b_val} = ${c_val}`;
+            a = [`x = ${x_val}`, `x = ${x_val + 2}`, `x = ${x_val + 1}`, `x = ${x_val - 1}`];
+        } else if (grade === 8) { // ថ្នាក់ទី ៨: កន្សោមពីជគណិត និងស្វ័យគុណ
+            let base = Math.floor(Math.random() * 5) + 2;
+            let exp = Math.floor(Math.random() * 3) + 2;
+            q = `គណនាតម្លៃនៃ ${base} ស្វ័យគុណ ${exp} (${base}^${exp})?`;
+            let ans = Math.pow(base, exp);
+            a = [ans.toString(), (ans + base).toString(), (ans * 2).toString(), (ans - 1).toString()];
+        } else if (grade === 9) { // ថ្នាក់ទី ៩: ទ្រឹស្តីបទពីតាក័រ និងសមីការដឺក្រេទី២
+            let a_val = 3 * i, b_val = 4 * i;
+            let c_val = 5 * i;
+            q = `ក្នុងត្រីកោណកែងមួយមានជ្រុងកែងប្រវែង ${a_val}cm និង ${b_val}cm។ រកប្រវែងអ៊ីប៉ូតែនុស?`;
+            a = [`${c_val} cm`, `${c_val + 2} cm`, `${c_val - 1} cm`, `${c_val + 5} cm`];
+        } else if (grade === 10) { // ថ្នាក់ទី ១០: អនុគមន៍ត្រីកោណមាត្រ និងវ៉ិចទ័រ
+            let deg = (i % 3 === 0) ? 30 : (i % 3 === 1 ? 45 : 60);
+            q = `តើ Sin(${deg}°) មានតម្លៃស្មើនឹងប៉ុន្មាន?`;
+            if (deg === 30) a = ["1/2", "√3/2", "√2/2", "1"];
+            else if (deg === 45) a = ["√2/2", "1/2", "√3/2", "0"];
+            else a = ["√3/2", "1/2", "√2/2", "1"];
+        } else if (grade === 11) { // ថ្នាក់ទី ១១: លីមីត និងស្វីត
+            let a_val = Math.floor(Math.random() * 5) + 1;
+            q = `គណនាលីមីត lim (x->${a_val}) (x² - ${a_val*a_val}) / (x - ${a_val})`;
+            let ans = a_val * 2;
+            a = [ans.toString(), a_val.toString(), "0", "អនន្ត"];
+        } else if (grade === 12) { // ថ្នាក់ទី ១២: ដេរីវេ និងអាំងតេក្រាល
+            let n = Math.floor(Math.random() * 5) + 2;
+            q = `រកដេរីវេនៃអនុគមន៍ f(x) = x^${n}?`;
+            a = [`${n}x^${n-1}`, `x^${n-1}`, `${n}x^${n}`, `${n+1}x^${n}`];
+        }
+
+        // Shuffle ចម្លើយ
+        let shuffledOptions = [...a];
+        let correctText = shuffledOptions[0];
+        shuffledOptions.sort(() => Math.random() - 0.5);
+        correct = shuffledOptions.indexOf(correctText);
+
+        questions.push({ q: q, a: shuffledOptions, correct: correct });
+    }
+    return questions;
+}
 
 let currentQuestions = [];
 let countdown;
-let timeLeft = 30 * 60; 
+let timeLeft = 30 * 60; // ៣០ នាទី
 
 const gradesList = document.getElementById('grades-list');
 for (let i = 1; i <= 12; i++) {
@@ -92,15 +169,10 @@ for (let i = 1; i <= 12; i++) {
 }
 
 function startQuiz(grade) {
-    let allGradeQuestions = quizDatabase[grade] || [];
-    if (allGradeQuestions.length === 0) {
-        alert("លំហាត់សម្រាប់ថ្នាក់នេះកំពុងរៀបចំ... សូមសាកល្បងថ្នាក់ទី ១, ៧ ឬ ១២!");
-        return;
-    }
-    currentQuestions = allGradeQuestions.sort(() => 0.5 - Math.random()).slice(0, 5);
+    currentQuestions = generateQuestions(grade);
     document.getElementById('grade-screen').classList.remove('active');
     document.getElementById('quiz-screen').classList.add('active');
-    document.getElementById('quiz-title').innerText = `វិញ្ញាសាគណិតវិទ្យា - ថ្នាក់ទី ${grade}`;
+    document.getElementById('quiz-title').innerText = `វិញ្ញាសាប្រឡងគណិតវិទ្យា - ថ្នាក់ទី ${grade} (១០០ សំណួរ)`;
     renderQuestions();
     startTimer();
 }
@@ -123,10 +195,11 @@ function renderQuestions() {
 }
 
 function startTimer() {
+    timeLeft = 30 * 60;
     countdown = setInterval(() => {
         if (timeLeft <= 0) {
             clearInterval(countdown);
-            alert("អស់ម៉ោងហើយ!");
+            alert("អស់ម៉ោងហើយ! ប្រព័ន្ធនឹងប្រគល់កិច្ចការដោយស្វ័យប្រវត្តិ។");
             submitQuiz();
         } else {
             timeLeft--;
