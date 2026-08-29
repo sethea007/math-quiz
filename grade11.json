@@ -1,0 +1,133 @@
+{
+  "grade": 11,
+  "title": "ថ្នាក់ទី ១១",
+  "lessons": [
+    {
+      "lesson_id": "G11_L01",
+      "lesson_title": "មេរៀនទី១៖ ស្វ៊ីតចំនួនពិត",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ស្វ៊ីតនព្វន្តមាន $u_1 = 3$ និងផលសងរួម $d = 4$। រកតួទី $5$ ($u_5$)",
+          "options": ["$19$", "$15$", "$23$", "$12$"],
+          "answer": 0,
+          "explanation": "តាមរូបមន្ត $u_n = u_1 + (n-1)d \\implies u_5 = 3 + (5-1)4 = 3 + 16 = 19$"
+        },
+        {
+          "id": 2,
+          "question": "ស្វ៊ីតធរណីមាត្រមាន $u_1 = 2$ និងផលធៀបរួម $q = 3$। រកតួទី $4$ ($u_4$)",
+          "options": ["$54$", "$18$", "$24$", "$162$"],
+          "answer": 0,
+          "explanation": "តាមរូបមន្ត $u_n = u_1 \\cdot q^{n-1} \\implies u_4 = 2 \\cdot 3^3 = 2 \\cdot 27 = 54$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L02",
+      "lesson_title": "មេរៀនទី២៖ អនុគមន៍អិចប៉ូណង់ស្យែល",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ដោះស្រាយសមីការ $2^{x+1} = 16$",
+          "options": ["$x = 3$", "$x = 4$", "$x = 2$", "$x = 5$"],
+          "answer": 0,
+          "explanation": "$2^{x+1} = 2^4 \\implies x + 1 = 4 \\implies x = 3$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L03",
+      "lesson_title": "មេរៀនទី៣៖ អនុគមន៍ឡការីត",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាតម្លៃនៃ $\\log_2(32)$",
+          "options": ["$5$", "$4$", "$16$", "$2$"],
+          "answer": 0,
+          "explanation": "$\\log_2(32) = \\log_2(2^5) = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L04",
+      "lesson_title": "មេរៀនទី៤៖ ត្រីកោណមាត្រ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាតម្លៃនៃ $\\sin^2(x) + \\cos^2(x)$",
+          "options": ["$1$", "$0$", "$-1$", "$2$"],
+          "answer": 0,
+          "explanation": "តាមរូបមន្តគ្រឹះត្រីកោណមាត្រ $\\sin^2(x) + \\cos^2(x) = 1$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L05",
+      "lesson_title": "មេរៀនទី៥៖ ម៉ាទ្រីស និងដេធែរមីណង់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាដេធែរមីណង់ $\\begin{vmatrix} 2 & 3 \\\\ 1 & 4 \\end{vmatrix}$",
+          "options": ["$5$", "$11$", "$8$", "$3$"],
+          "answer": 0,
+          "explanation": "$\\det = (2)(4) - (3)(1) = 8 - 3 = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L06",
+      "lesson_title": "មេរៀនទី៦៖ ចំនួនកុំផ្លិច (កម្រិតដំបូង)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាតម្លៃនៃ $i^2$",
+          "options": ["$-1$", "$1$", "$i$", "$-i$"],
+          "answer": 0,
+          "explanation": "តាមនិយមន័យចំនួននិមិត្ត $i = \\sqrt{-1} \\implies i^2 = -1$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L07",
+      "lesson_title": "មេរៀនទី៧៖ លីមីតនៃអនុគមន៍ (កម្រិតដំបូង)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាលីមីត $\\lim_{x \\to 3} (2x - 1)$",
+          "options": ["$5$", "$6$", "$7$", "$4$"],
+          "answer": 0,
+          "explanation": "ជំនួស $x = 3 \\implies 2(3) - 1 = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G11_L08",
+      "lesson_title": "មេរៀនទី៨៖ ធរណីមាត្រវិភាគក្នុងលំហ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកចម្ងាយរវាងចំណុច $A(0,0,0)$ និង $B(1,2,2)$",
+          "options": ["$3$", "$9$", "$\\sqrt{5}$", "$5$"],
+          "answer": 0,
+          "explanation": "$AB = \\sqrt{(1-0)^2 + (2-0)^2 + (2-0)^2} = \\sqrt{1 + 4 + 4} = \\sqrt{9} = 3$"
+        }
+      ]
+    }
+  ]
+}
