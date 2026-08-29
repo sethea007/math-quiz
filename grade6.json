@@ -1,0 +1,126 @@
+{
+  "grade": 6,
+  "title": "ថ្នាក់ទី ៦",
+  "lessons": [
+    {
+      "lesson_id": "G6_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនគត់ និងការប្រៀបធៀបចំនួន",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $12,450 + 8,550$",
+          "options": ["$21,000$", "$20,000$", "$21,500$", "$20,900$"],
+          "answer": 0,
+          "explanation": "$12,450 + 8,550 = 21,000$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រភាគ និងប្រមាណវិធីលើប្រភាគ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "សម្រួលប្រភាគ $\\frac{12}{18}$ ឱ្យទៅជាប្រភាគសម្រួលមិនបាន",
+          "options": ["$\\frac{2}{3}$", "$\\frac{3}{4}$", "$\\frac{4}{6}$", "$\\frac{1}{2}$"],
+          "answer": 0,
+          "explanation": "ចែកភាគយក និងភាគបែងនឹង ៦៖ $\\frac{12 \\div 6}{18 \\div 6} = \\frac{2}{3}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L03",
+      "lesson_title": "មេរៀនទី៣៖ ចំនួនទសភាគ និងប្រមាណវិធីលើចំនួនទសភាគ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនា $3.5 \\times 0.4$",
+          "options": ["$1.4$", "$14.0$", "$0.14$", "$1.2$"],
+          "answer": 0,
+          "explanation": "$3.5 \\times 0.4 = 1.40 = 1.4$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L04",
+      "lesson_title": "មេរៀនទី៤៖ ភាគរយ និងការអនុវត្ត",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "សរសេរ $\\frac{3}{5}$ ជាភាគរយ",
+          "options": ["$60\\%$", "$50\\%$", "$30\\%$", "$75\\%$"],
+          "answer": 0,
+          "explanation": "$\\frac{3}{5} \\times 100\\% = 60\\%$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L05",
+      "lesson_title": "មេរៀនទី៥៖ រង្វាស់ប្រវែង ម៉ាស និងចំណុះ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បម្លែង $2.5\\text{ kg}$ ទៅជាក្រាម (g)",
+          "options": ["$2500\\text{ g}$", "$250\\text{ g}$", "$25\\text{ g}$", "$25000\\text{ g}$"],
+          "answer": 0,
+          "explanation": "$1\\text{ kg} = 1000\\text{ g} \\implies 2.5 \\times 1000 = 2500\\text{ g}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L06",
+      "lesson_title": "មេរៀនទី៦៖ រង្វាស់ពេលវេលា",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "២ ម៉ោង ៣០ នាទី ស្មើនឹងប៉ុន្មាននាទី?",
+          "options": ["១៥០ នាទី", "១៣០ នាទី", "២៣០ នាទី", "១២០ នាទី"],
+          "answer": 0,
+          "explanation": "$2 \\text{ ម៉ោង} = 2 \\times 60 = 120 \\text{ នាទី} \\implies 120 + 30 = 150 \\text{ នាទី}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L07",
+      "lesson_title": "មេរៀនទី៧៖ រូបធរណីមាត្រប្លង់ (ចតុកោណ និងរង្វង់)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាក្រឡាផ្ទៃចតុកោណកែងដែលមានបណ្តោយ $8\\text{ cm}$ និងទទឹង $5\\text{ cm}$",
+          "options": ["$40\\text{ cm}^2$", "$26\\text{ cm}^2$", "$13\\text{ cm}^2$", "$20\\text{ cm}^2$"],
+          "answer": 0,
+          "explanation": "$S = \\text{បណ្តោយ} \\times \\text{ទទឹង} = 8 \\times 5 = 40\\text{ cm}^2$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G6_L08",
+      "lesson_title": "មេរៀនទី៨៖ ធរណីមាត្រលំហ និងមាឌ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាមាឌប្រអប់កែង (ប្រលេខីប៉ែតកែង) មានបណ្តោយ $5\\text{ cm}$, ទទឹង $3\\text{ cm}$ និងកម្ពស់ $4\\text{ cm}$",
+          "options": ["$60\\text{ cm}^3$", "$12\\text{ cm}^3$", "$24\\text{ cm}^3$", "$30\\text{ cm}^3$"],
+          "answer": 0,
+          "explanation": "$V = a \\times b \\times h = 5 \\times 3 \\times 4 = 60\\text{ cm}^3$"
+        }
+      ]
+    }
+  ]
+}
