@@ -24,12 +24,25 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
           <label class="block text-sm font-semibold mb-1">១. ជ្រើសរើសថ្នាក់៖</label>
-          <select id="gradeSelect" class="w-full border rounded-xl p-2.5 bg-slate-50" onchange="onGradeChange()">
+          <select id="gradeSelect" class="w-full border rounded-xl p-2.5 bg-slate-50" onchange="loadGradeLessons()">
+            <option value="12">ថ្នាក់ទី ១២</option>
+            <option value="11">ថ្នាក់ទី ១១</option>
+            <option value="10">ថ្នាក់ទី ១០</option>
+            <option value="9">ថ្នាក់ទី ៩</option>
+            <option value="8">ថ្នាក់ទី ៨</option>
+            <option value="7">ថ្នាក់ទី ៧</option>
+            <option value="6">ថ្នាក់ទី ៦</option>
+            <option value="5">ថ្នាក់ទី ៥</option>
+            <option value="4">ថ្នាក់ទី ៤</option>
+            <option value="3">ថ្នាក់ទី ៣</option>
+            <option value="2">ថ្នាក់ទី ២</option>
+            <option value="1">ថ្នាក់ទី ១</option>
           </select>
         </div>
         <div>
           <label class="block text-sm font-semibold mb-1">២. ជ្រើសរើសមេរៀន៖</label>
           <select id="lessonSelect" class="w-full border rounded-xl p-2.5 bg-slate-50">
+            <option value="">កំពុងទាញយកមេរៀន...</option>
           </select>
         </div>
         <div>
@@ -69,91 +82,50 @@
   </div>
 
   <script>
-    // -------------------------------------------------------------
-    // ទិន្នន័យមេរៀនទាំងអស់ រៀបចំតាមថ្នាក់ និងតាមមេរៀន (Data Hub)
-    // -------------------------------------------------------------
-    const mathDatabase = {
-      "G12": {
-        title: "ថ្នាក់ទី ១២",
-        lessons: [
-          { id: "G12_L1", name: "មេរៀនទី១: លីមីត និងភាពជាប់" },
-          { id: "G12_L2", name: "មេរៀនទី២: ដេរីវេ និងអនុវត្តន៍" },
-          { id: "G12_L3", name: "មេរៀនទី៣: អាំងតេក្រាល" },
-          { id: "G12_L4", name: "មេរៀនទី៤: ចំនួនកុំផ្លិច" }
-        ]
-      },
-      "G11": {
-        title: "ថ្នាក់ទី ១១",
-        lessons: [
-          { id: "G11_L1", name: "មេរៀនទី១: ស្វ៊ីតចំនួនពិត" },
-          { id: "G11_L2", name: "មេរៀនទី២: អនុគមន៍អិចប៉ូណង់ស្យែល" },
-          { id: "G11_L3", name: "មេរៀនទី៣: ត្រីកោណមាត្រ" }
-        ]
-      },
-      "G10": {
-        title: "ថ្នាក់ទី ១០",
-        lessons: [
-          { id: "G10_L1", name: "មេរៀនទី១: ពហុធា" },
-          { id: "G10_L2", name: "មេរៀនទី២: សមីការ និងវិសមីការ" }
-        ]
-      }
-      // អ្នកអាចបន្ថែម G9, G8, G7... រហូតដល់ G1 តាមលំនាំនេះបាន
-    };
-
+    let currentGradeData = null;
     let currentQuestions = [];
     let currentIndex = 0;
     let userAnswers = {};
     let timerInterval = null;
 
-    // Load Grades ចូល Dropdown
-    function initApp() {
-      const gradeSelect = document.getElementById('gradeSelect');
-      gradeSelect.innerHTML = '';
-      for (let key in mathDatabase) {
-        gradeSelect.innerHTML += `<option value="${key}">${mathDatabase[key].title}</option>`;
-      }
-      onGradeChange();
-    }
-
-    // Load Lessons តាម Grade ដែលបានជ្រើសរើស
-    function onGradeChange() {
-      const gradeKey = document.getElementById('gradeSelect').value;
+    // ទាញយកមេរៀនតាមថ្នាក់ដែលបានជ្រើសរើស
+    async function loadGradeLessons() {
+      const gradeVal = document.getElementById('gradeSelect').value;
       const lessonSelect = document.getElementById('lessonSelect');
-      lessonSelect.innerHTML = '';
-      
-      const lessons = mathDatabase[gradeKey].lessons;
-      lessons.forEach(lesson => {
-        lessonSelect.innerHTML += `<option value="${lesson.id}">${lesson.name}</option>`;
-      });
+      lessonSelect.innerHTML = '<option value="">កំពុងទាញយកមេរៀន...</option>';
+
+      try {
+        const response = await fetch(`grade${gradeVal}.json`);
+        currentGradeData = await response.json();
+        
+        lessonSelect.innerHTML = '';
+        currentGradeData.lessons.forEach((lesson, index) => {
+          lessonSelect.innerHTML += `<option value="${index}">${lesson.lesson_title}</option>`;
+        });
+      } catch (error) {
+        console.error(" Error loading JSON file:", error);
+        lessonSelect.innerHTML = '<option value="">មិនមានទិន្នន័យ</option>';
+      }
     }
 
-    // បង្កើត ១០០ សំណួរ តាមមេរៀន និងលេខតេស្ត
-    function generate100Questions(lessonId, testNo) {
+    // បង្កើត ១០០ សំណួរស្វ័យប្រវត្តិ
+    function generate100Questions(sampleQuestions, testNo) {
       let questions = [];
-      let seed = testNo * 99;
+      let baseSample = sampleQuestions && sampleQuestions.length > 0 ? sampleQuestions[0] : null;
 
       for (let i = 1; i <= 100; i++) {
-        let a = ((i + seed) % 20) + 2;
-        let b = ((i * 2 + seed) % 15) + 1;
-
-        if (lessonId === 'G12_L4') { // ចំនួនកុំផ្លិច
-          let ans = Math.sqrt(a * a + b * b).toFixed(2);
+        if (baseSample) {
           questions.push({
-            text: `គណនាម៉ូឌុលនៃចំនួនកុំផ្លិច $z = ${a} + ${b}i$`,
-            options: [`$|z| = ${ans}$`, `$|z| = ${a + b}$`, `$|z| = ${a * b}$`, `$|z| = ${a * a + b * b}$`],
-            correct: 0
+            text: `[លំហាត់ទី ${i}] ${baseSample.question}`,
+            options: baseSample.options,
+            correct: baseSample.answer
           });
-        } else if (lessonId === 'G12_L3') { // អាំងតេក្រាល
-          questions.push({
-            text: `គណនាអាំងតេក្រាល $\\int ${a}x\\, dx$`,
-            options: [`$\\frac{${a}}{2}x^2 + C$`, `$${a}x^2 + C$`, `$${a} + C$`, `$\\frac{1}{${a}}x^2 + C$`],
-            correct: 0
-          });
-        } else { // លំហាត់ទូទៅ
-          let res = a + b;
+        } else {
+          let a = i + (testNo * 2);
+          let b = i + 5;
           questions.push({
             text: `គណនាតម្លៃនៃកន្សោម $x = ${a} + ${b}$`,
-            options: [`$${res}$`, `$${res + 2}$`, `$${res - 1}$`, `$${res + 5}$`],
+            options: [`$${a+b}$`, `$${a+b+1}$`, `$${a+b-1}$`, `$${a+b+2}$`],
             correct: 0
           });
         }
@@ -162,20 +134,24 @@
     }
 
     function startQuiz() {
-      const gradeKey = document.getElementById('gradeSelect').value;
       const lessonSelect = document.getElementById('lessonSelect');
-      const lessonName = lessonSelect.options[lessonSelect.selectedIndex].text;
-      const lessonId = lessonSelect.value;
+      if (!lessonSelect.value && lessonSelect.value !== "0") {
+        alert("សូមជ្រើសរើសមេរៀនជាមុនសិន!");
+        return;
+      }
+
+      const lessonIdx = parseInt(lessonSelect.value);
+      const selectedLesson = currentGradeData.lessons[lessonIdx];
       const testNo = parseInt(document.getElementById('testNo').value) || 1;
 
-      currentQuestions = generate100Questions(lessonId, testNo);
+      currentQuestions = generate100Questions(selectedLesson.sample_questions, testNo);
       currentIndex = 0;
       userAnswers = {};
 
       document.getElementById('quizContainer').classList.remove('hidden');
-      document.getElementById('quizTitle').innerText = `${mathDatabase[gradeKey].title} - ${lessonName} (តេស្តទី ${testNo})`;
+      document.getElementById('quizTitle').innerText = `${currentGradeData.title} - ${selectedLesson.lesson_title} (តេស្តទី ${testNo})`;
 
-      startTimer(30 * 60); // ៣០ នាទី
+      startTimer(30 * 60);
       renderQuestion();
     }
 
@@ -243,8 +219,8 @@
       }, 1000);
     }
 
-    // ចាប់ផ្តើមដំណើរការ
-    initApp();
+    // ដំបូងទាញយកទិន្នន័យថ្នាក់ទី១២
+    loadGradeLessons();
   </script>
 </body>
 </html>
