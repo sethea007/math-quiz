@@ -1,0 +1,126 @@
+{
+  "grade": 4,
+  "title": "ថ្នាក់ទី ៤",
+  "lessons": [
+    {
+      "lesson_id": "G4_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនគត់ដល់ ១០០ ០០០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើតួលេខ $៥$ នៅក្នុងចំនួន $៣៥,២៤០$ មានតម្លៃតាមខ្ទង់ស្មើនឹងប៉ុន្មាន?",
+          "options": ["$៥,០០០$", "$៥០,០០០$", "$៥០០$", "$៥០$"],
+          "answer": 0,
+          "explanation": "លេខ $៥$ ស្ថិតនៅក្នុងខ្ទង់ពាន់ ដូច្នេះវាមានតម្លៃ $៥,០០០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រមាណវិធីបូក និងដកចំនួនគត់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលដក $៤៥,៨០០ - ១២,៣០០$",
+          "options": ["$៣៣,៥០០$", "$៣៣,២០០$", "$៣២,៥០០$", "$៣៤,៥០០$"],
+          "answer": 0,
+          "explanation": "$៤៥,៨០០ - ១២,៣០០ = ៣៣,៥០០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L03",
+      "lesson_title": "មេរៀនទី៣៖ ប្រមាណវិធីគុណ និងចែកចំនួនគត់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលចែក $១៤៤ \\div ១២$",
+          "options": ["$១២$", "$១០$", "$១៤$", "$១៦$"],
+          "answer": 0,
+          "explanation": "$១៤៤ \\div ១២ = ១២$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L04",
+      "lesson_title": "មេរៀនទី៤៖ ស្គាល់ប្រភាគ និងការប្រៀបធៀបប្រភាគ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ប្រៀបធៀបប្រភាគ $\\frac{៣}{៧}$ និង $\\frac{៥}{៧}$",
+          "options": ["$\\frac{៣}{៧} < \\frac{៥}{៧}$", "$\\frac{៣}{៧} > \\frac{៥}{៧}$", "$\\frac{៣}{៧} = \\frac{៥}{៧}$", "រកមិនបាន"],
+          "answer": 0,
+          "explanation": "ភាគបែងដូចគ្នា ភាគយកតូចជាងមានតម្លៃតូចជាង ដូច្នេះ $\\frac{៣}{៧} < \\frac{៥}{៧}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L05",
+      "lesson_title": "មេរៀនទី៥៖ ចំនួនទសភាគគ្រឹះ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "សរសេរប្រភាគ $\\frac{៧}{១០}$ ជាចំនួនទសភាគ",
+          "options": ["$០.៧$", "$៧.០$", "$០.០៧$", "$០.៧៧$"],
+          "answer": 0,
+          "explanation": "$\\frac{៧}{១០} = ០.៧$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L06",
+      "lesson_title": "មេរៀនទី៦៖ រង្វាស់ប្រវែង និងទម្ងន់ (ម៉ាស)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បម្លែង $៤\\text{ m}$ ទៅជាសង់ទីម៉ែត្រ (cm)",
+          "options": ["$៤០០\\text{ cm}$", "$៤០\\text{ cm}$", "$៤០០០\\text{ cm}$", "$០.៤\\text{ cm}$"],
+          "answer": 0,
+          "explanation": "$១\\text{ m} = ១០០\\text{ cm} \\implies ៤ \\times ១០០ = ៤០០\\text{ cm}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L07",
+      "lesson_title": "មេរៀនទី៧៖ ពេលវេលា និងរូបិយវត្ថុ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើ ១ ម៉ោង ស្មើនឹងប៉ុន្មាននាទី?",
+          "options": ["៦០ នាទី", "$៣០ នាទី$", "$១០០ នាទី$", "$២៤ នាទី$"],
+          "answer": 0,
+          "explanation": "១ ម៉ោង មាន ៦០ នាទី"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G4_L08",
+      "lesson_title": "មេរៀនទី៨៖ រូបធរណីមាត្រ (បន្ទាត់ស្រប បន្ទាត់កែង និងបរិមាត្រ)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាបរិមាត្រការ៉េដែលមានជ្រុងប្រវែង $៥\\text{ cm}$",
+          "options": ["$២០\\text{ cm}$", "$២៥\\text{ cm}$", "$១០\\text{ cm}$", "$១៥\\text{ cm}$"],
+          "answer": 0,
+          "explanation": "បរិមាត្រការ៉េ $P = ៤ \\times a = ៤ \\times ៥ = ២០\\text{ cm}$"
+        }
+      ]
+    }
+  ]
+}
