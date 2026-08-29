@@ -1,0 +1,126 @@
+{
+  "grade": 9,
+  "title": "ថ្នាក់ទី ៩",
+  "lessons": [
+    {
+      "lesson_id": "G9_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនអសនិទាន និងរ៉ាឌីកាល់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាតម្លៃនៃ $\\sqrt{49} + \\sqrt{16}$",
+          "options": ["$11$", "$65$", "$13$", "$7$"],
+          "answer": 0,
+          "explanation": "$\\sqrt{49} = 7$ និង $\\sqrt{16} = 4 \\implies 7 + 4 = 11$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L02",
+      "lesson_title": "មេរៀនទី២៖ កន្សោមពិជគណិត និងស្វ័យគុណ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ពង្រៀកកន្សោម $(x + 3)^2$",
+          "options": ["$x^2 + 6x + 9$", "$x^2 + 9$", "$x^2 + 3x + 9$", "$x^2 + 6x + 6$"],
+          "answer": 0,
+          "explanation": "តាមរូបមន្ត $(a+b)^2 = a^2 + 2ab + b^2 \\implies x^2 + 2(x)(3) + 3^2 = x^2 + 6x + 9$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L03",
+      "lesson_title": "មេរៀនទី៣៖ សមីការ និងវិសមីការដឺក្រេទី១មានមួយអញ្ញាត",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ដោះស្រាយសមីការ $3x - 5 = 10$",
+          "options": ["$x = 5$", "$x = 3$", "$x = 15$", "$x = -5$"],
+          "answer": 0,
+          "explanation": "$3x = 10 + 5 = 15 \\implies x = \\frac{15}{3} = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L04",
+      "lesson_title": "មេរៀនទី៤៖ ប្រព័ន្ធសមីការដឺក្រេទី១មានពីរអញ្ញាត",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកគូចម្លើយ $(x, y)$ នៃប្រព័ន្ធសមីការ $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$",
+          "options": ["$(3, 2)$", "$(4, 1)$", "$(2, 3)$", "$(5, 0)$"],
+          "answer": 0,
+          "explanation": "បូកសមីការទាំងពីរចូលគ្នា៖ $2x = 6 \\implies x = 3$ នោះ $y = 5 - 3 = 2$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L05",
+      "lesson_title": "មេរៀនទី៥៖ សមីការនៃបន្ទាត់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកមេគុណប្រាប់ទិសនៃបន្ទាត់ដែលកាត់តាមចំណុច $A(1, 2)$ និង $B(3, 6)$",
+          "options": ["$2$", "$1$", "$3$", "$4$"],
+          "answer": 0,
+          "explanation": "មេគុណប្រាប់ទិស $m = \\frac{y_B - y_A}{x_B - x_A} = \\frac{6 - 2}{3 - 1} = \\frac{4}{2} = 2$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L06",
+      "lesson_title": "មេរៀនទី៦៖ ទ្រឹស្តីបទពីរតាក័រ និងតាលែស",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ត្រីកោណកែងមួយមានជ្រុងកែង $a = 6$ និង $b = 8$। គណនាប្រវែងអ៊ីប៉ូតេនុស $c$",
+          "options": ["$10$", "$14$", "$48$", "$12$"],
+          "answer": 0,
+          "explanation": "តាមទ្រឹស្តីបទពីរតាក័រ $c = \\sqrt{a^2 + b^2} = \\sqrt{36 + 64} = \\sqrt{100} = 10$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L07",
+      "lesson_title": "មេរៀនទី៧៖ រង្វង់ និងមុំក្នុងរង្វង់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បើមុំផ្ចិតនៃរង្វង់មួយស្មើនឹង $80^\\circ$। រកខ្នាតមុំចារឹកក្នុងរង្វង់ដែលស្កាត់ធ្នូជាមួយគ្នា",
+          "options": ["$40^\\circ$", "$80^\\circ$", "$160^\\circ$", "$20^\\circ$"],
+          "answer": 0,
+          "explanation": "មុំចារឹកក្នុងរង្វង់ស្មើនឹងពាក់កណ្តាលនៃមុំផ្ចិតស្កាត់ធ្នូជាមួយគ្នា $\\implies \\frac{80^\\circ}{2} = 40^\\circ$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G9_L08",
+      "lesson_title": "មេរៀនទី៨៖ ធរណីមាត្រក្នុងលំហ (សូលីត)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាឌីម៉ង់ (មាឌ) នៃគូបដែលមានជ្រុងប្រវែង $a = 3\\text{ cm}$",
+          "options": ["$27\\text{ cm}^3$", "$9\\text{ cm}^3$", "$18\\text{ cm}^3$", "$36\\text{ cm}^3$"],
+          "answer": 0,
+          "explanation": "មាឌគូប $V = a^3 = 3^3 = 27\\text{ cm}^3$"
+        }
+      ]
+    }
+  ]
+}
