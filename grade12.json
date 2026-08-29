@@ -1,0 +1,133 @@
+{
+  "grade": 12,
+  "title": "ថ្នាក់ទី ១២",
+  "lessons": [
+    {
+      "lesson_id": "G12_L01",
+      "lesson_title": "មេរៀនទី១៖ លីមីត និងភាពជាប់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាលីមីត $\\lim_{x \\to 2} (3x^2 - 4x + 1)$",
+          "options": ["$5$", "$9$", "$13$", "$0$"],
+          "answer": 0,
+          "explanation": "ជំនួស $x = 2$: $3(2)^2 - 4(2) + 1 = 12 - 8 + 1 = 5$"
+        },
+        {
+          "id": 2,
+          "question": "គណនាលីមីត $\\lim_{x \\to 0} \\frac{\\sin(3x)}{x}$",
+          "options": ["$1$", "$3$", "$0$", "រកមិនបាន"],
+          "answer": 1,
+          "explanation": "ប្រើរូបមន្ត $\\lim_{x \\to 0} \\frac{\\sin(ax)}{x} = a \\implies 3$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L02",
+      "lesson_title": "មេរៀនទី២៖ ដេរីវេ និងអនុវត្តន៍",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកដេរីវេនៃអនុគមន៍ $f(x) = x^3 - 5x + 2$",
+          "options": ["$3x^2 - 5$", "$x^2 - 5$", "$3x - 5$", "$3x^2$"],
+          "answer": 0,
+          "explanation": "$f'(x) = 3x^{3-1} - 5 = 3x^2 - 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L03",
+      "lesson_title": "មេរៀនទី៣៖ អាំងតេក្រាល",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាអាំងតេក្រាលមិនកំណត់ $\\int (4x^3 + 2x)\\, dx$",
+          "options": ["$x^4 + x^2 + C$", "$12x^2 + 2 + C$", "$x^4 + 2x^2 + C$", "$\\frac{x^4}{4} + C$"],
+          "answer": 0,
+          "explanation": "$\\int (4x^3 + 2x)\\, dx = 4\\frac{x^4}{4} + 2\\frac{x^2}{2} + C = x^4 + x^2 + C$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L04",
+      "lesson_title": "មេរៀនទី៤៖ សមីការឌីផេរ៉ង់ស្យែល",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកចម្លើយទូទៅនៃសមីការឌីផេរ៉ង់ស្យែល $y' - 3y = 0$",
+          "options": ["$y = Ce^{3x}$", "$y = Ce^{-3x}$", "$y = 3x + C$", "$y = C\\cos(3x)$"],
+          "answer": 0,
+          "explanation": "សមីការទម្រង់ $y' - ay = 0$ មានចម្លើយទូទៅ $y = Ce^{ax} \\implies y = Ce^{3x}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L05",
+      "lesson_title": "មេរៀនទី៥៖ ចំនួនកុំផ្លិច",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកម៉ូឌុលនៃចំនួនកុំផ្លិច $z = 3 + 4i$",
+          "options": ["$5$", "$7$", "$25$", "$1$"],
+          "answer": 0,
+          "explanation": "$|z| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L06",
+      "lesson_title": "មេរៀនទី៦៖ កោនិក (ប៉ារ៉ាបូល អេលីប អ៊ីពែបូល)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកកាំនៃរង្វង់ដែលមានសមីការ $x^2 + y^2 = 16$",
+          "options": ["$4$", "$16$", "$8$", "$2$"],
+          "answer": 0,
+          "explanation": "រង្វង់មានទម្រង់ $x^2 + y^2 = R^2 \\implies R = \\sqrt{16} = 4$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L07",
+      "lesson_title": "មេរៀនទី៧៖ វ៉ិចទ័រ និងធរណីមាត្រក្នុងលំហ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលគុណស្កាឡែរនៃ $\\vec{u}(1, 2, 3)$ និង $\\vec{v}(2, 0, -1)$",
+          "options": ["$-1$", "$1$", "$5$", "$0$"],
+          "answer": 0,
+          "explanation": "$\\vec{u} \\cdot \\vec{v} = (1)(2) + (2)(0) + (3)(-1) = 2 + 0 - 3 = -1$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G12_L08",
+      "lesson_title": "មេរៀនទី៨៖ ប្រូបាប",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បោះគ្រាប់ឡុកឡាក់មួយ។ រកប្រូបាបដែលទទួលបានលេខគូ",
+          "options": ["$\\frac{1}{2}$", "$\\frac{1}{6}$", "$\\frac{1}{3}$", "$\\frac{2}{3}$"],
+          "answer": 0,
+          "explanation": "ករណីស្របគឺ {2, 4, 6} (3 ករណី) លើករណីអាច {1,2,3,4,5,6} (6 ករណី) $\\implies \\frac{3}{6} = \\frac{1}{2}$"
+        }
+      ]
+    }
+  ]
+}
