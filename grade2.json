@@ -1,0 +1,126 @@
+{
+  "grade": 2,
+  "title": "ថ្នាក់ទី ២",
+  "lessons": [
+    {
+      "lesson_id": "G2_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនគត់ដល់ ១ ០០០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើតួលេខ $៥$ នៅក្នុងចំនួន $៤៥២$ មានតម្លៃតាមខ្ទង់ស្មើនឹងប៉ុន្មាន?",
+          "options": ["$៥០$", "$៥០០$", "$៥$", "$៥០០$"],
+          "answer": 0,
+          "explanation": "លេខ $៥$ ស្ថិតនៅក្នុងខ្ទង់ដប់ ដូច្នេះវាមានតម្លៃ $៥០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រមាណវិធីបូក និងដកចំនួនគត់ត្រឹម ១០០ (មានត្រេ និងគ្មានត្រេ)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $៣៨ + ២៥$",
+          "options": ["$៦៣$", "$៥៣$", "$៦៥$", "$៥៨$"],
+          "answer": 0,
+          "explanation": "$៣៨ + ២៥ = ៦៣$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L03",
+      "lesson_title": "មេរៀនទី៣៖ ប្រមាណវិធីបូក និងដកចំនួនគត់ត្រឹម ១ ០០០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលដក $៥០០ - ២៣០$",
+          "options": ["$២៧០$", "$៣៧០$", "$២៣០$", "$២៨០$"],
+          "answer": 0,
+          "explanation": "$៥០០ - ២៣០ = ២៧០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L04",
+      "lesson_title": "មេរៀនទី៤៖ ស្គាល់ប្រមាណវិធីគុណ (មេ ២, ៣, ៤, ៥, ១០)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលគុណ $៥ \\times ៤$",
+          "options": ["$២០$", "$១៥$", "$២៥$", "$១៦$"],
+          "answer": 0,
+          "explanation": "$៥ \\times ៤ = ២០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L05",
+      "lesson_title": "មេរៀនទី៥៖ ស្គាល់ប្រមាណវិធីចែកងាយៗ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "ចែកឃ្លី ១២ គ្រាប់ ស្មើៗគ្នាឱ្យក្មេង ៣ នាក់។ តើក្មេងម្នាក់ៗទទួលបានឃ្លីប៉ុន្មានគ្រាប់?",
+          "options": ["៤ គ្រាប់", "៣ គ្រាប់", "៥ គ្រាប់", "៦ គ្រាប់"],
+          "answer": 0,
+          "explanation": "$១២ \\div ៣ = ៤$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L06",
+      "lesson_title": "មេរៀនទី៦៖ រង្វាស់ប្រវែង និងទម្ងន់ងាយៗ (m, cm, kg)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើប្រវែង ១ ម៉ែត្រ មានប៉ុន្មានសង់ទីម៉ែត្រ?",
+          "options": ["១០០ cm", "១០ cm", "១០០០ cm", "៥០ cm"],
+          "answer": 0,
+          "explanation": "$១\\text{ m} = ១០០\\text{ cm}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L07",
+      "lesson_title": "មេរៀនទី៧៖ ការមើលនាឡិកា និងប្រាក់រៀល",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បើទ្រនិចខ្លីចង្អុលលេខ ៧ និងទ្រនិចវែងចង្អុលលេខ ១២ តើម៉ោងប៉ុន្មាន?",
+          "options": ["ម៉ោង ៧ គត់", "ម៉ោង ៨ គត់", "ម៉ោង ៧ និង ៣០ នាទី", "ម៉ោង ១២ គត់"],
+          "answer": 0,
+          "explanation": "ទ្រនិចខ្លីចង្អុលលេខ ៧ និងវែងចង្អុលលេខ ១២ គឺម៉ោង ៧ គត់"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G2_L08",
+      "lesson_title": "មេរៀនទី៨៖ រូបធរណីមាត្រ (ការ៉េ ចតុកោណកែង ត្រីកោណ និងរង្វង់)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើការ៉េមានជ្រុងប៉ុន្មាន ដែលមានប្រវែងស្មើៗគ្នា?",
+          "options": ["៤", "៣", "៥", "២"],
+          "answer": 0,
+          "explanation": "ការ៉េមានជ្រុង ៤ ស្មើៗគ្នា"
+        }
+      ]
+    }
+  ]
+}
