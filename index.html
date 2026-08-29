@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ប្រព័ន្ធតេស្ត និងបោះពុម្ពគណិតវិទ្យា</title>
+  <title>ប្រព័ន្ធតេស្ត និងបោះពុម្ព A4</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- KaTeX for Rendering Math -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -13,22 +13,20 @@
     @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&display=swap');
     body { font-family: 'Kantumruy Pro', sans-serif; }
 
-    /* រចនាប័ទ្មសម្រាប់បោះពុម្ពលើក្រដាស A4 */
     @media print {
       .no-print { display: none !important; }
       body { background-color: white; color: black; }
       .print-area { shadow: none; border: none; padding: 0; width: 100%; }
-      .page-break { page-break-after: always; }
-      .question-card { break-inside: avoid; border: 1px solid #ccc !important; margin-bottom: 12px !important; }
+      .question-card { break-inside: avoid; border: 1px solid #ccc !important; margin-bottom: 12px !important; page-break-inside: avoid; }
     }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen">
 
   <div class="max-w-4xl mx-auto p-4">
-    <!-- Header Selection (លាក់ពេល Print) -->
+    <!-- Header Selection -->
     <div class="bg-white rounded-2xl shadow-md p-6 mb-6 no-print">
-      <h1 class="text-2xl font-bold text-indigo-700 text-center mb-6">ប្រព័ន្ធតេស្តគណិតវិទ្យា (ថ្នាក់ទី១ - ទី១២)</h1>
+      <h1 class="text-2xl font-bold text-indigo-700 text-center mb-6">ប្រព័ន្ធបង្កើតវិញ្ញាសា A4 (សិស្ស & គ្រូ)</h1>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
@@ -60,53 +58,18 @@
         </div>
       </div>
 
-      <div class="flex gap-3">
-        <button onclick="startQuiz('online')" class="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition">
-          💻 ធ្វើតេស្តលើបណ្តាញ (ម្ដង ១សំណួរ)
+      <!-- ប៊ូតុងជ្រើសរើសទម្រង់ Print -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <button onclick="generateA4('student')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+          👨‍🎓 មើលទម្រង់ A4 សម្រាប់សិស្ស (គ្មានចម្លើយ)
         </button>
-        <button onclick="startQuiz('print')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition">
-          📄 មើលទម្រង់ A4 សម្រាប់ Print
+        <button onclick="generateA4('teacher')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition">
+          👨‍🏫 មើលទម្រង់ A4 សម្រាប់គ្រូកែ (មានចម្លើយ A B C D)
         </button>
       </div>
     </div>
 
-    <!-- Status Message -->
-    <div id="statusMessage" class="hidden p-4 mb-6 rounded-xl text-center font-semibold no-print"></div>
-
-    <!-- Mode 1: Interactive Quiz Panel -->
-    <div id="quizContainer" class="hidden bg-white rounded-2xl shadow-md p-6 no-print">
-      <div class="flex justify-between items-center border-b pb-4 mb-4">
-        <div>
-          <span id="quizTitle" class="font-bold text-lg text-indigo-700 block"></span>
-          <p class="text-sm text-slate-500">សំណួរទី <span id="currentQNum" class="font-bold">1</span> / 100</p>
-        </div>
-        <div class="bg-red-50 border border-red-200 rounded-lg px-4 py-1 text-right">
-          <span class="text-xs text-red-500 block">ពេលនៅសល់</span>
-          <span id="timer" class="text-xl font-bold text-red-600 font-mono">30:00</span>
-        </div>
-      </div>
-
-      <div class="mb-6">
-        <h2 id="questionText" class="text-lg font-semibold mb-4 text-slate-800"></h2>
-        <div id="optionsContainer" class="space-y-3"></div>
-        
-        <!-- ប្រអប់បង្ហាញចម្លើយត្រឹមត្រូវ -->
-        <div id="explanationBox" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-300 rounded-xl">
-          <span class="font-bold text-emerald-800 block mb-1">✅ ចម្លើយត្រឹមត្រូវ និងការពន្យល់៖</span>
-          <div id="explanationText" class="text-emerald-900 text-sm"></div>
-        </div>
-      </div>
-
-      <div class="flex justify-between border-t pt-4">
-        <button onclick="prevQuestion()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg">ត្រឡប់ក្រោយ</button>
-        <button onclick="toggleAnswer()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg">
-          👁️ មើលចម្លើយ
-        </button>
-        <button onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg">បន្ទាប់</button>
-      </div>
-    </div>
-
-    <!-- Mode 2: A4 Printable Worksheet View -->
+    <!-- A4 Printable Area -->
     <div id="printContainer" class="hidden bg-white rounded-2xl shadow-md p-8 print-area">
       <div class="flex justify-between items-center border-b-2 border-slate-800 pb-4 mb-6">
         <div>
@@ -114,38 +77,30 @@
           <p id="printHeaderSub" class="text-sm text-slate-600"></p>
         </div>
         <div class="text-right">
-          <button onclick="window.print()" class="no-print bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl shadow mb-2">
-            🖨️ បោះពុម្ពជា A4 (Print)
+          <button onclick="window.print()" class="no-print bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2 rounded-xl shadow mb-2">
+            🖨️ បោះពុម្ព (Print / PDF)
           </button>
-          <div class="text-xs text-slate-500">ឈ្មោះសិស្ស៖....................................</div>
+          <div id="studentInfo" class="text-xs text-slate-600 font-semibold">ឈ្មោះសិស្ស៖.................................................</div>
         </div>
       </div>
 
-      <div id="allQuestionsList" class="space-y-6"></div>
+      <div id="allQuestionsList" class="space-y-4"></div>
     </div>
   </div>
 
   <script>
     let currentGradeData = null;
     let currentQuestions = [];
-    let currentIndex = 0;
-    let userAnswers = {};
-    let timerInterval = null;
 
     async function loadGradeLessons() {
       const gradeVal = document.getElementById('gradeSelect').value;
       const lessonSelect = document.getElementById('lessonSelect');
-      const statusMsg = document.getElementById('statusMessage');
-      
-      lessonSelect.innerHTML = '<option value="">កំពុងទាញយកមេរៀន...</option>';
-      statusMsg.classList.add('hidden');
 
       try {
         const response = await fetch(`./grade${gradeVal}.json`, { cache: "no-store" });
         if (!response.ok) throw new Error(`HTTP status ${response.status}`);
         
         currentGradeData = await response.json();
-        
         lessonSelect.innerHTML = '';
         if (currentGradeData.lessons && currentGradeData.lessons.length > 0) {
           currentGradeData.lessons.forEach((lesson, index) => {
@@ -158,33 +113,46 @@
       }
     }
 
+    // បង្កើតសំណួរដោយកំណត់ចម្លើយត្រឹមត្រូវឱ្យឆ្លាស់គ្នា A, B, C, D (0, 1, 2, 3) ស្វ័យប្រវត្តិ
     function generate100Questions(sampleQuestions, testNo) {
       let questions = [];
       let baseSample = (sampleQuestions && sampleQuestions.length > 0) ? sampleQuestions[0] : null;
 
       for (let i = 1; i <= 100; i++) {
+        // ចម្លើយត្រឹមត្រូវឆ្លាស់គ្នា A=0, B=1, C=2, D=3, A=0...
+        let correctIndex = (i - 1) % 4; 
+
         if (baseSample) {
           questions.push({
             text: `[សំណួរទី ${i}] ${baseSample.question}`,
             options: baseSample.options,
-            correct: baseSample.answer,
-            explanation: baseSample.explanation || "គ្មានការពន្យល់"
+            correct: correctIndex,
+            explanation: baseSample.explanation || "គណនាតាមរូបមន្តមេរៀន"
           });
         } else {
           let a = i + (testNo * 2);
           let b = i + 3;
+          let sum = a + b;
+          
+          // បង្កើតជម្រើសចម្លើយ ៤ ដោយដាក់ចម្លើយត្រូវចំទីតាំង correctIndex
+          let opts = [];
+          opts[correctIndex] = `$${sum}$`;
+          opts[(correctIndex + 1) % 4] = `$${sum + 1}$`;
+          opts[(correctIndex + 2) % 4] = `$${sum - 1}$`;
+          opts[(correctIndex + 3) % 4] = `$${sum + 2}$`;
+
           questions.push({
             text: `គណនាតម្លៃនៃកន្សោម $x = ${a} + ${b}$`,
-            options: [`$${a+b}$`, `$${a+b+1}$`, `$${a+b-1}$`, `$${a+b+2}$`],
-            correct: 0,
-            explanation: `ផលបូកគឺ ${a} + ${b} = ${a+b}`
+            options: opts,
+            correct: correctIndex,
+            explanation: `ផលបូកគឺ ${a} + ${b} = ${sum}`
           });
         }
       }
       return questions;
     }
 
-    function startQuiz(mode) {
+    function generateA4(role) {
       const lessonSelect = document.getElementById('lessonSelect');
       if (!lessonSelect.value && lessonSelect.value !== "0") {
         alert("សូមជ្រើសរើសមេរៀនជាមុនសិន!");
@@ -197,130 +165,63 @@
 
       currentQuestions = generate100Questions(selectedLesson.sample_questions, testNo);
 
-      if (mode === 'online') {
-        document.getElementById('printContainer').classList.add('hidden');
-        document.getElementById('quizContainer').classList.remove('hidden');
-        document.getElementById('quizTitle').innerText = `${currentGradeData.title} - ${selectedLesson.lesson_title} (តេស្តទី ${testNo})`;
-        currentIndex = 0;
-        userAnswers = {};
-        startTimer(30 * 60);
-        renderQuestion();
-      } else {
-        // Mode Print A4
-        document.getElementById('quizContainer').classList.add('hidden');
-        document.getElementById('printContainer').classList.remove('hidden');
-        document.getElementById('printHeaderTitle').innerText = `${currentGradeData.title} - ${selectedLesson.lesson_title}`;
-        document.getElementById('printHeaderSub').innerText = `វិញ្ញាសាតេស្តទី ${testNo} (សរុប ១០០ សំណួរ / រយៈពេល ៣០ នាទី)`;
-        renderA4Worksheet();
-      }
-    }
+      document.getElementById('printContainer').classList.remove('hidden');
+      document.getElementById('printHeaderTitle').innerText = `${currentGradeData.title} - ${selectedLesson.lesson_title}`;
 
-    function renderQuestion() {
-      const q = currentQuestions[currentIndex];
-      document.getElementById('currentQNum').innerText = currentIndex + 1;
-      document.getElementById('questionText').innerHTML = q.text;
-      document.getElementById('explanationBox').classList.add('hidden');
-
-      const optsContainer = document.getElementById('optionsContainer');
-      optsContainer.innerHTML = '';
-
-      q.options.forEach((opt, idx) => {
-        const isSelected = userAnswers[currentIndex] === idx;
-        optsContainer.innerHTML += `
-          <label class="flex items-center p-3 border rounded-xl cursor-pointer ${isSelected ? 'border-indigo-600 bg-indigo-50' : 'border-slate-200 hover:bg-slate-50'}">
-            <input type="radio" name="option" class="hidden" onclick="selectAnswer(${idx})" ${isSelected ? 'checked' : ''}>
-            <span class="w-7 h-7 rounded-full border flex items-center justify-center mr-3 font-bold text-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100'}">
-              ${String.fromCharCode(65 + idx)}
-            </span>
-            <span>${opt}</span>
-          </label>
-        `;
-      });
-
-      renderMath();
-    }
-
-    function toggleAnswer() {
-      const box = document.getElementById('explanationBox');
-      const text = document.getElementById('explanationText');
-      const q = currentQuestions[currentIndex];
-
-      if (box.classList.contains('hidden')) {
-        const correctLetter = String.fromCharCode(65 + q.correct);
-        const correctOption = q.options[q.correct];
-        text.innerHTML = `<b>ចម្លើយ៖ ${correctLetter}. ${correctOption}</b><br><b>ពន្យល់៖</b> ${q.explanation}`;
-        box.classList.remove('hidden');
-        renderMath();
-      } else {
-        box.classList.add('hidden');
-      }
-    }
-
-    function renderA4Worksheet() {
       const list = document.getElementById('allQuestionsList');
       list.innerHTML = '';
 
-      currentQuestions.forEach((q, i) => {
-        let optionsHTML = q.options.map((opt, idx) => 
-          `<span class="inline-block mr-6 font-medium">(${String.fromCharCode(65 + idx)}) ${opt}</span>`
-        ).join('');
+      if (role === 'student') {
+        // ទម្រង់សម្រាប់សិស្ស (គ្មានចម្លើយ)
+        document.getElementById('printHeaderSub').innerText = `សន្លឹកកិច្ចការសិស្ស - តេស្តទី ${testNo} (សរុប ១០០ សំណួរ)`;
+        document.getElementById('studentInfo').style.display = 'block';
 
-        list.innerHTML += `
-          <div class="question-card p-4 border rounded-xl bg-slate-50">
-            <p class="font-bold text-slate-900 mb-2">${q.text}</p>
-            <div class="text-sm text-slate-700 mb-2">${optionsHTML}</div>
-            <div class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded border border-emerald-200">
-              <b>ចម្លើយ៖</b> ${String.fromCharCode(65 + q.correct)} | <b>ពន្យល់៖</b> ${q.explanation}
+        currentQuestions.forEach((q, i) => {
+          let optionsHTML = q.options.map((opt, idx) => 
+            `<span class="inline-block mr-8 font-medium">(${String.fromCharCode(65 + idx)}) ${opt}</span>`
+          ).join('');
+
+          list.innerHTML += `
+            <div class="question-card p-3 border rounded-xl bg-slate-50">
+              <p class="font-semibold text-slate-900 mb-1.5">${q.text}</p>
+              <div class="text-sm text-slate-700">${optionsHTML}</div>
             </div>
-          </div>
-        `;
-      });
+          `;
+        });
+      } else {
+        // ទម្រង់សម្រាប់គ្រូ (មានចម្លើយ ឆ្លាស់គ្នា A B C D និងការពន្យល់)
+        document.getElementById('printHeaderSub').innerText = `សន្លឹកកំណែគ្រូ - តេស្តទី ${testNo} (ចម្លើយឆ្លាស់គ្នា A B C D)`;
+        document.getElementById('studentInfo').style.display = 'none';
+
+        currentQuestions.forEach((q, i) => {
+          let optionsHTML = q.options.map((opt, idx) => {
+            const isCorrect = (idx === q.correct);
+            return `<span class="inline-block mr-6 font-medium ${isCorrect ? 'text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded' : ''}">
+              (${String.fromCharCode(65 + idx)}) ${opt}
+            </span>`;
+          }).join('');
+
+          list.innerHTML += `
+            <div class="question-card p-3 border border-emerald-300 rounded-xl bg-emerald-50/40">
+              <p class="font-semibold text-slate-900 mb-1.5">${q.text}</p>
+              <div class="text-sm text-slate-700 mb-2">${optionsHTML}</div>
+              <div class="text-xs text-emerald-800 bg-emerald-100 p-2 rounded border border-emerald-300">
+                <b>ចម្លើយត្រឹមត្រូវ៖</b> ${String.fromCharCode(65 + q.correct)} | <b>ពន្យល់៖</b> ${q.explanation}
+              </div>
+            </div>
+          `;
+        });
+      }
 
       renderMath();
     }
 
     function renderMath() {
       if (window.renderMathInElement) {
-        renderMathInElement(document.body, {
+        renderMathInElement(document.getElementById('printContainer'), {
           delimiters: [{left: '$', right: '$', display: false}]
         });
       }
-    }
-
-    function selectAnswer(idx) {
-      userAnswers[currentIndex] = idx;
-      renderQuestion();
-    }
-
-    function nextQuestion() {
-      if (currentIndex < currentQuestions.length - 1) {
-        currentIndex++;
-        renderQuestion();
-      }
-    }
-
-    function prevQuestion() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderQuestion();
-      }
-    }
-
-    function startTimer(seconds) {
-      clearInterval(timerInterval);
-      let timeRemaining = seconds;
-
-      timerInterval = setInterval(() => {
-        const min = Math.floor(timeRemaining / 60);
-        const sec = timeRemaining % 60;
-        document.getElementById('timer').innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-
-        if (timeRemaining <= 0) {
-          clearInterval(timerInterval);
-          alert('អស់ချိန်ធ្វើតេស្ត!');
-        }
-        timeRemaining--;
-      }, 1000);
     }
 
     window.onload = loadGradeLessons;
