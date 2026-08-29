@@ -1,0 +1,126 @@
+{
+  "grade": 5,
+  "title": "ថ្នាក់ទី ៥",
+  "lessons": [
+    {
+      "lesson_id": "G5_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនគត់ដល់ ១ ០០០ ០០០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើតួលេខ $៧$ នៅក្នុងចំនួន $៤៧៥,៨២០$ មានតម្លៃតាមខ្ទង់ស្មើនឹងប៉ុន្មាន?",
+          "options": ["$៧០,០០០$", "$៧,០០០$", "$៧០០$", "$៧,០០០,០០០$"],
+          "answer": 0,
+          "explanation": "លេខ $៧$ ស្ថិតនៅក្នុងខ្ទង់ម៉ឺន ដូច្នេះវាមានតម្លៃ $៧០,០០០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រមាណវិធីបូក ដក គុណ ចែកលើចំនួនគត់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលគុណ $៤៥០ \\times ២០$",
+          "options": ["$៩,០០០$", "$៩,៥០០$", "$៨,០០០$", "$៩០,០០០$"],
+          "answer": 0,
+          "explanation": "$៤៥០ \\times ២០ = ៩,០០០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L03",
+      "lesson_title": "មេរៀនទី៣៖ ប្រភាគ និងប្រមាណវិធីបូកដកប្រភាគភាគបែងដូចគ្នា",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $\\frac{៣}{៨} + \\frac{២}{៨}$",
+          "options": ["$\\frac{៥}{៨}$", "$\\frac{៥}{១៦}$", "$\\frac{១}{៨}$", "$\\frac{៦}{៨}$"],
+          "answer": 0,
+          "explanation": "ប្រភាគដែលមានភាគបែងដូចគ្នា ត្រូវយកភាគយកបូកភាគយក៖ $\\frac{៣ + ២}{៨} = \\frac{៥}{៨}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L04",
+      "lesson_title": "មេរៀនទី៤៖ ចំនួនទសភាគ និងប្រមាណវិធីលើចំនួនទសភាគ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $១២.៥ + ៤.២៥$",
+          "options": ["$១៦.៧៥$", "$១៦.៣០$", "$១៦.៥០$", "$១៦.៨៥$"],
+          "answer": 0,
+          "explanation": "$១២.៥០ + ៤.២៥ = ១៦.៧៥$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L05",
+      "lesson_title": "មេរៀនទី៥៖ រង្វាស់ប្រវែង និងរង្វាស់ម៉ាស",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បម្លែង $៣.៥\\text{ km}$ ទៅជាម៉ែត្រ (m)",
+          "options": ["$៣៥០០\\text{ m}$", "$៣៥០\\text{ m}$", "$៣៥\\text{ m}$", "$៣៥០០០\\text{ m}$"],
+          "answer": 0,
+          "explanation": "$១\\text{ km} = ១០០០\\text{ m} \\implies ៣.៥ \\times ១០០០ = ៣៥០០\\text{ m}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L06",
+      "lesson_title": "មេរៀនទី៦៖ រង្វាស់ពេលវេលា និងរូបិយវត្ថុ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បើ ១ ដុល្លារ ស្មើនឹង ៤ ០០០ រៀល តើ ៥ ដុល្លារ ស្មើនឹងប៉ុន្មានរៀល?",
+          "options": ["២០ ០០០ រៀល", "១៥ ០០០ រៀល", "២៥ ០០០ រៀល", "១០ ០០០ រៀល"],
+          "answer": 0,
+          "explanation": "$៥ \\times ៤,០០០ = ២០,០០០\\text{ រៀល}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L07",
+      "lesson_title": "មេរៀនទី៧៖ បរិមាត្រ និងក្រឡាផ្ទៃនៃរូបប្លង់",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាបរិមាត្រចតុកោណកែងដែលមានបណ្តោយ $១០\\text{ cm}$ និងទទឹង $៦\\text{ cm}$",
+          "options": ["$៣២\\text{ cm}$", "$៦០\\text{ cm}$", "$1៦\\text{ cm}$", "$២៤\\text{ cm}$"],
+          "answer": 0,
+          "explanation": "បរិមាត្រ = $(បណ្តោយ + ទទឹង) \\times ២ = (១០ + ៦) \\times ២ = ៣២\\text{ cm}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G5_L08",
+      "lesson_title": "មេរៀនទី៨៖ មុំ និងចតុកោណផ្សេងៗ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើមុំកែងមានរង្វាស់ស្មើនឹងប៉ុន្មានដឺក្រេ?",
+          "options": ["$៩០^\\circ$", "$១៨០^\\circ$", "$៤៥^\\circ$", "$៣៦០^\\circ$"],
+          "answer": 0,
+          "explanation": "មុំកែងមានរង្វាស់ស្មើនឹង $៩០^\\circ$"
+        }
+      ]
+    }
+  ]
+}
