@@ -1,0 +1,126 @@
+{
+  "grade": 1,
+  "title": "ថ្នាក់ទី ១",
+  "lessons": [
+    {
+      "lesson_id": "G1_L01",
+      "lesson_title": "មេរៀនទី១៖ ការរាប់ និងស្គាល់ចំនួនពី ១ ដល់ ១០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើចំនួនណាធំជាងគេក្នុងចំណោម $៣, ៧, ៥$?",
+          "options": ["$៧$", "$៣$", "$៥$", "$០$"],
+          "answer": 0,
+          "explanation": "$៧$ គឺជាចំនួនដែលធំជាងគេ"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រមាណវិធីបូកត្រឹម ១០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $៤ + ៣$",
+          "options": ["$៧$", "$៦$", "$៨$", "$៥$"],
+          "answer": 0,
+          "explanation": "$៤ + ៣ = ៧$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L03",
+      "lesson_title": "មេរៀនទី៣៖ ប្រមាណវិធីដកត្រឹម ១០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលដក $៩ - ៤$",
+          "options": ["$៥$", "$៤$", "$៦$", "$៣$"],
+          "answer": 0,
+          "explanation": "$៩ - ៤ = ៥$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L04",
+      "lesson_title": "មេរៀនទី៤៖ ការរាប់ និងស្គាល់ចំនួនពី ១១ ដល់ ២០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើចំនួន ១ដប់ និង ៥រាយ ស្មើនឹងចំនួនប៉ុន្មាន?",
+          "options": ["$១៥$", "$៥១$", "$១០$", "$២០$"],
+          "answer": 0,
+          "explanation": "១ដប់ (១០) + ៥រាយ (៥) = ១៥"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L05",
+      "lesson_title": "មេរៀនទី៥៖ ប្រមាណវិធីបូក និងដកត្រឹម ២០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $១២ + ៥$",
+          "options": ["$១៧$", "$១៦$", "$១៨$", "$១៥$"],
+          "answer": 0,
+          "explanation": "$១២ + ៥ = ១៧$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L06",
+      "lesson_title": "មេរៀនទី៦៖ ការរាប់ចំនួនដល់ ១០០",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើចំនួនបន្ទាប់ពី $៤៩$ គឺជានិមិត្តសញ្ញាចំនួនអ្វី?",
+          "options": ["$៥០$", "$៤៨$", "$៥១$", "$៦០$"],
+          "answer": 0,
+          "explanation": "ចំនួនបន្ទាប់ពី $៤៩$ គឺ $៥០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L07",
+      "lesson_title": "មេរៀនទី៧៖ ប្រមាណវិធីបូក និងដកត្រឹម ១០០ (គ្មានត្រេ)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាផលបូក $៣០ + ២០$",
+          "options": ["$៥០$", "$៤០$", "$៦០$", "$១០$"],
+          "answer": 0,
+          "explanation": "$៣០ + ២០ = ៥០$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G1_L08",
+      "lesson_title": "មេរៀនទី៨៖ រូបធរណីមាត្រងាយៗ និងប្រៀបធៀបទំហំ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "តើរូបដែលមានជ្រុង $៣$ ហៅថារូបអ្វី?",
+          "options": ["ត្រីកោណ", "ការ៉េ", "រង្វង់", "ចតុកោណ"],
+          "answer": 0,
+          "explanation": "រូបដែលមានជ្រុង ៣ គឺត្រីកោណ"
+        }
+      ]
+    }
+  ]
+}
