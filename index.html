@@ -1,234 +1,297 @@
-<!DOCTYPE html>
-<html lang="km">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ ថ្នាក់ទី១-១២ (១០០ វិញ្ញាសា)</title>
-    <style>
-        body { font-family: 'Khmer OS Battambang', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1, h2 { text-align: center; color: #1a73e8; }
-        .screen { display: none; }
-        .active { display: block; }
-        .grid-grades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
-        button { background-color: #1a73e8; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: inherit; margin-top: 10px; }
-        button:hover { background-color: #1557b0; }
-        .btn-print { background-color: #ff9800; width: 100%; margin-bottom: 10px; }
-        .btn-print:hover { background-color: #e68a00; }
-        #timer { font-size: 22px; color: red; font-weight: bold; text-align: right; margin-bottom: 20px; position: sticky; top: 10px; background: white; padding: 5px 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .question-box { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #1a73e8; page-break-inside: avoid; }
-        .options-box label { display: block; background: white; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; }
-        .options-box input { margin-right: 10px; }
-        .result-score { font-size: 24px; color: green; text-align: center; font-weight: bold; }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; max-width: 100%; padding: 0; }
-            button, #timer { display: none !important; }
-            .question-box { background: none; border-left: none; border-bottom: 1px dashed #ccc; padding: 10px 0; }
-            .options-box label { border: none; padding: 5px 0; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <!-- អេក្រង់ទី១៖ ជ្រើសរើសថ្នាក់ -->
-    <div id="grade-screen" class="screen active">
-        <h1>ប្រព័ន្ធប្រឡងគណិតវិទ្យាអនឡាញ (១០០ វិញ្ញាសា - ៣០ នាទី)</h1>
-        <p style="text-align:center;">សូមជ្រើសរើសថ្នាក់របស់អ្នក ដើម្បីចាប់ផ្តើមប្រឡង៖</p>
-        <div class="grid-grades" id="grades-list"></div>
-    </div>
-
-    <!-- អេក្រង់ទី២៖ ធ្វើលំហាត់ -->
-    <div id="quiz-screen" class="screen">
-        <div id="timer">ពេលវេលានៅសល់៖ 30:00</div>
-        <h2 id="quiz-title">វិញ្ញាសាគណិតវិទ្យា</h2>
-        
-        <button onclick="window.print()" class="btn-print">🖨️ ព្រីនវិញ្ញាសានេះ ឬរក្សាទុកជា PDF (A4)</button>
-        
-        <div id="questions-container"></div>
-        <button onclick="submitQuiz()" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 18px;">ប្រគល់កិច្ចការ (Submit)</button>
-    </div>
-
-    <!-- អេក្រង់ទី៣៖ បង្ហាញលទ្ធផល -->
-    <div id="result-screen" class="screen">
-        <h2>លទ្ធផលនៃការធ្វើលំហាត់</h2>
-        <div class="result-score" id="score-text"></div>
-        <div id="review-container" style="margin-top:20px; max-height: 500px; overflow-y: auto;"></div>
-        <button onclick="location.reload()" style="width: 100%; margin-top: 20px; background-color: #34a853; padding: 15px; font-size: 18px;">ធ្វើម្តងទៀត (លំហាត់ថ្មី)</button>
-    </div>
-</div>
-
-<script>
-// បង្កើតលំហាត់ ១០០ សំណួរស្វ័យប្រវត្តិតាមថ្នាក់នីមួយៗ (ថ្នាក់ទី ១-១២)
-function generateQuestions(grade) {
-    let questions = [];
-    for (let i = 1; i <= 100; i++) {
-        let q = "", a = [], correct = 0;
-
-        if (grade === 1) { // ថ្នាក់ទី ១: ប្រមាណវិធីបូក ដក ទំហំតូចៗ
-            let num1 = Math.floor(Math.random() * 20) + 1;
-            let num2 = Math.floor(Math.random() * 20) + 1;
-            let isAdd = Math.random() > 0.5;
-            if (isAdd) {
-                q = `តើ ${num1} + ${num2} ស្មើនឹងប៉ុន្មាន?`;
-                let ans = num1 + num2;
-                a = [ans.toString(), (ans + 2).toString(), (ans - 1).toString(), (ans + 5).toString()];
-            } else {
-                let max = Math.max(num1, num2);
-                let min = Math.min(num1, num2);
-                q = `តើ ${max} - ${min} ស្មើនឹងប៉ុន្មាន?`;
-                let ans = max - min;
-                a = [ans.toString(), (ans + 1).toString(), (ans + 3).toString(), (ans - 2 < 0 ? 0 : ans - 2).toString()];
-            }
-        } else if (grade === 2) { // ថ្នាក់ទី ២: ប្រមាណវិធីគុណតូចៗ និងបូកដកលេខ ២ ខ្ទង់
-            let num1 = Math.floor(Math.random() * 50) + 10;
-            let num2 = Math.floor(Math.random() * 40) + 5;
-            q = `តើ ${num1} + ${num2} ស្មើនឹងប៉ុន្មាន?`;
-            let ans = num1 + num2;
-            a = [ans.toString(), (ans + 10).toString(), (ans - 5).toString(), (ans + 2).toString()];
-        } else if (grade === 3) { // ថ្នាក់ទី ៣: មេលេខ គុណ និងចែក
-            let n1 = Math.floor(Math.random() * 9) + 2;
-            let n2 = Math.floor(Math.random() * 9) + 2;
-            q = `តើ ${n1} × ${n2} ស្មើនឹងប៉ុន្មាន?`;
-            let ans = n1 * n2;
-            a = [ans.toString(), (ans + 4).toString(), (ans - 3).toString(), (ans + 10).toString()];
-        } else if (grade === 4) { // ថ្នាក់ទី ៤: ប្រភាគ និងប្រមាណវិធីលាយ
-            let a1 = i, b1 = i + 2;
-            q = `រកតម្លៃប្រភាគស្មើគ្នានៃ ${i}/${i+1}`;
-            let ans = `${i*2}/${(i+1)*2}`;
-            a = [ans, `${i*2+1}/${(i+1)*2}`, `${i*2}/${(i+1)*2+1}`, `${i}/${i+3}`];
-        } else if (grade === 5) { // ថ្នាក់ទី ៥: ចំនួនទសភាគ និងភាគរយ
-            let val = Math.floor(Math.random() * 90) + 10;
-            q = `គណនា ${val}% នៃ ១០០?`;
-            let ans = val;
-            a = [ans.toString(), (ans/10).toString(), (ans*2).toString(), (ans+15).toString()];
-        } else if (grade === 6) { // ថ្នាក់ទី ៦: ផ្ទៃក្រឡារូបធរណីមាត្រ និងបរិមាត្រ
-            let base = Math.floor(Math.random() * 10) + 2;
-            let height = Math.floor(Math.random() * 10) + 2;
-            q = `រកផ្ទៃក្រឡាចតុកោណកែងដែលមានប្រវែងបណ្តោយ ${base}cm និងទទឹង ${height}cm?`;
-            let ans = base * height;
-            a = [`${ans} cm²`, `${ans * 2} cm²`, `${ans + 5} cm²`, `${ans - 2} cm²`];
-        } else if (grade === 7) { // ថ្នាក់ទី ៧: សមីការដឺក្រេទី១
-            let a_val = Math.floor(Math.random() * 5) + 1;
-            let b_val = Math.floor(Math.random() * 20) + 1;
-            let x_val = Math.floor(Math.random() * 10) + 1;
-            let c_val = a_val * x_val + b_val;
-            q = `គណនាតម្លៃនៃ x បើ ${a_val}x + ${b_val} = ${c_val}`;
-            a = [`x = ${x_val}`, `x = ${x_val + 2}`, `x = ${x_val + 1}`, `x = ${x_val - 1}`];
-        } else if (grade === 8) { // ថ្នាក់ទី ៨: កន្សោមពីជគណិត និងស្វ័យគុណ
-            let base = Math.floor(Math.random() * 5) + 2;
-            let exp = Math.floor(Math.random() * 3) + 2;
-            q = `គណនាតម្លៃនៃ ${base} ស្វ័យគុណ ${exp} (${base}^${exp})?`;
-            let ans = Math.pow(base, exp);
-            a = [ans.toString(), (ans + base).toString(), (ans * 2).toString(), (ans - 1).toString()];
-        } else if (grade === 9) { // ថ្នាក់ទី ៩: ទ្រឹស្តីបទពីតាក័រ និងសមីការដឺក្រេទី២
-            let a_val = 3 * i, b_val = 4 * i;
-            let c_val = 5 * i;
-            q = `ក្នុងត្រីកោណកែងមួយមានជ្រុងកែងប្រវែង ${a_val}cm និង ${b_val}cm។ រកប្រវែងអ៊ីប៉ូតែនុស?`;
-            a = [`${c_val} cm`, `${c_val + 2} cm`, `${c_val - 1} cm`, `${c_val + 5} cm`];
-        } else if (grade === 10) { // ថ្នាក់ទី ១០: អនុគមន៍ត្រីកោណមាត្រ និងវ៉ិចទ័រ
-            let deg = (i % 3 === 0) ? 30 : (i % 3 === 1 ? 45 : 60);
-            q = `តើ Sin(${deg}°) មានតម្លៃស្មើនឹងប៉ុន្មាន?`;
-            if (deg === 30) a = ["1/2", "√3/2", "√2/2", "1"];
-            else if (deg === 45) a = ["√2/2", "1/2", "√3/2", "0"];
-            else a = ["√3/2", "1/2", "√2/2", "1"];
-        } else if (grade === 11) { // ថ្នាក់ទី ១១: លីមីត និងស្វីត
-            let a_val = Math.floor(Math.random() * 5) + 1;
-            q = `គណនាលីមីត lim (x->${a_val}) (x² - ${a_val*a_val}) / (x - ${a_val})`;
-            let ans = a_val * 2;
-            a = [ans.toString(), a_val.toString(), "0", "អនន្ត"];
-        } else if (grade === 12) { // ថ្នាក់ទី ១២: ដេរីវេ និងអាំងតេក្រាល
-            let n = Math.floor(Math.random() * 5) + 2;
-            q = `រកដេរីវេនៃអនុគមន៍ f(x) = x^${n}?`;
-            a = [`${n}x^${n-1}`, `x^${n-1}`, `${n}x^${n}`, `${n+1}x^${n}`];
-        }
-
-        // Shuffle ចម្លើយ
-        let shuffledOptions = [...a];
-        let correctText = shuffledOptions[0];
-        shuffledOptions.sort(() => Math.random() - 0.5);
-        correct = shuffledOptions.indexOf(correctText);
-
-        questions.push({ q: q, a: shuffledOptions, correct: correct });
+{
+  "curriculum": [
+    {
+      "grade": 1,
+      "lessons": [
+        {"id": "G1_L01", "title": "ចំនួនពី ១ ដល់ ៥", "target_exercises": 100},
+        {"id": "G1_L02", "title": "ចំនួន ០ និងលេខ ៦ ដល់ ៩", "target_exercises": 100},
+        {"id": "G1_L03", "title": "ចំនួន ១០", "target_exercises": 100},
+        {"id": "G1_L04", "title": "ការប្រៀបធៀបចំនួន", "target_exercises": 100},
+        {"id": "G1_L05", "title": "វិធីបូកចំនួនដែលមានផលបូកមិនលើសពី ១០", "target_exercises": 100},
+        {"id": "G1_L06", "title": "វិធីដកចំនួនដែលមានតាំងដកមិនលើសពី ១០", "target_exercises": 100},
+        {"id": "G1_L07", "title": "ចំនួនពី ១១ ដល់ ២០", "target_exercises": 100},
+        {"id": "G1_L08", "title": "វិធីបូក និងវិធីដកចំនួនមិនលើសពី ២០", "target_exercises": 100},
+        {"id": "G1_L09", "title": "ប្រវែង និងទម្ងន់", "target_exercises": 100},
+        {"id": "G1_L10", "title": "ចំនួនដល់ ១០០", "target_exercises": 100},
+        {"id": "G1_L11", "title": "វិធីបូក និងវិធីដកចំនួនដល់ ១០០", "target_exercises": 100},
+        {"id": "G1_L12", "title": "រូបធរណីមាត្រ និងពេលវេលា", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 2,
+      "lessons": [
+        {"id": "G2_L01", "title": "ចំនួនដល់ ១០០០", "target_exercises": 100},
+        {"id": "G2_L02", "title": "ការប្រៀបធៀបចំនួន", "target_exercises": 100},
+        {"id": "G2_L03", "title": "វិធីបូកចំនួនមានលេខ ២ខ្ទង់", "target_exercises": 100},
+        {"id": "G2_L04", "title": "វិធីដកចំនួនមានលេខ ២ខ្ទង់", "target_exercises": 100},
+        {"id": "G2_L05", "title": "វិធីគុណ", "target_exercises": 100},
+        {"id": "G2_L06", "title": "ប្រភាគ", "target_exercises": 100},
+        {"id": "G2_L07", "title": "វិធីចែក", "target_exercises": 100},
+        {"id": "G2_L08", "title": "ប្រវែង", "target_exercises": 100},
+        {"id": "G2_L09", "title": "ទម្ងន់", "target_exercises": 100},
+        {"id": "G2_L10", "title": "ចំណុះ", "target_exercises": 100},
+        {"id": "G2_L11", "title": "វិធីបូកចំនួនមានលេខ ៣ខ្ទង់", "target_exercises": 100},
+        {"id": "G2_L12", "title": "វិធីដកចំនួនមានលេខ ៣ខ្ទង់និង ២ខ្ទង់", "target_exercises": 100},
+        {"id": "G2_L13", "title": "រូបិយវត្ថុ", "target_exercises": 100},
+        {"id": "G2_L14", "title": "ធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G2_L15", "title": "ពេលវេលា", "target_exercises": 100},
+        {"id": "G2_L16", "title": "ទិន្នន័យ", "target_exercises": 100},
+        {"id": "G2_L17", "title": "លំនាំគំរូ", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 3,
+      "lessons": [
+        {"id": "G3_L01", "title": "ចំនួនដល់ 10 000", "target_exercises": 100},
+        {"id": "G3_L02", "title": "ទម្ងន់", "target_exercises": 100},
+        {"id": "G3_L03", "title": "វិធីបូក", "target_exercises": 100},
+        {"id": "G3_L04", "title": "រូបិយវត្ថុ", "target_exercises": 100},
+        {"id": "G3_L05", "title": "ប្រវែង", "target_exercises": 100},
+        {"id": "G3_L06", "title": "វិធីដក", "target_exercises": 100},
+        {"id": "G3_L07", "title": "មាឌនិងចំណុះ", "target_exercises": 100},
+        {"id": "G3_L08", "title": "ពេលវេលា", "target_exercises": 100},
+        {"id": "G3_L09", "title": "វិធីគុណ", "target_exercises": 100},
+        {"id": "G3_L10", "title": "ធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G3_L11", "title": "វិធីចែក", "target_exercises": 100},
+        {"id": "G3_L12", "title": "ប្រភាគ", "target_exercises": 100},
+        {"id": "G3_L13", "title": "ក្រាបរូបភាព លំនាំគំរូ ឱកាស", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 4,
+      "lessons": [
+        {"id": "G4_L01", "title": "ចំនួន", "target_exercises": 100},
+        {"id": "G4_L02", "title": "ប្រភាគ", "target_exercises": 100},
+        {"id": "G4_L03", "title": "វិធីបូក", "target_exercises": 100},
+        {"id": "G4_L04", "title": "រូបធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G4_L05", "title": "ទម្ងន់", "target_exercises": 100},
+        {"id": "G4_L06", "title": "វិធីដក", "target_exercises": 100},
+        {"id": "G4_L07", "title": "រូបិយវត្ថុ", "target_exercises": 100},
+        {"id": "G4_L08", "title": "វិធីគុណ", "target_exercises": 100},
+        {"id": "G4_L09", "title": "វិធីចែក", "target_exercises": 100},
+        {"id": "G4_L10", "title": "ពេលវេលា", "target_exercises": 100},
+        {"id": "G4_L11", "title": "ប្រវែង", "target_exercises": 100},
+        {"id": "G4_L12", "title": "ចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G4_L13", "title": "វិធីបូកចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G4_L14", "title": "វិធីដកចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G4_L15", "title": "មុំ", "target_exercises": 100},
+        {"id": "G4_L16", "title": "បន្ទាត់កែងនិងបន្ទាត់ស្រប", "target_exercises": 100},
+        {"id": "G4_L17", "title": "ស្ថិតិ", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 5,
+      "lessons": [
+        {"id": "G5_L01", "title": "ចំនួន", "target_exercises": 100},
+        {"id": "G5_L02", "title": "វិធីគុណ", "target_exercises": 100},
+        {"id": "G5_L03", "title": "វិធីចែក", "target_exercises": 100},
+        {"id": "G5_L04", "title": "ប្រមាណវិធីមានវង់ក្រចក", "target_exercises": 100},
+        {"id": "G5_L05", "title": "ផលធៀប និងភាគរយ", "target_exercises": 100},
+        {"id": "G5_L06", "title": "ស្ថិតិ", "target_exercises": 100},
+        {"id": "G5_L07", "title": "ចំនួនចម្រុះ", "target_exercises": 100},
+        {"id": "G5_L08", "title": "ចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G5_L09", "title": "វិធីបូក វិធីដកចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G5_L10", "title": "វិធីគុណចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G5_L11", "title": "ប្រភាគ", "target_exercises": 100},
+        {"id": "G5_L12", "title": "រូបិយវត្ថុ", "target_exercises": 100},
+        {"id": "G5_L13", "title": "រង្វាស់ប្រវែង", "target_exercises": 100},
+        {"id": "G5_L14", "title": "រង្វាស់ទម្ងន់", "target_exercises": 100},
+        {"id": "G5_L15", "title": "រង្វាស់ចំណុះ", "target_exercises": 100},
+        {"id": "G5_L16", "title": "រង្វាស់ពេល", "target_exercises": 100},
+        {"id": "G5_L17", "title": "ធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G5_L18", "title": "ប្លង់ ផែនទី និងមាត្រដ្ឋាន", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 6,
+      "lessons": [
+        {"id": "G6_L01", "title": "ចំនួន", "target_exercises": 100},
+        {"id": "G6_L02", "title": "ចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G6_L03", "title": "វិធីបូក និងវិធីដកចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G6_L04", "title": "កន្លះបន្ទាត់ពុះមុំ និងសំណង់មុំ", "target_exercises": 100},
+        {"id": "G6_L05", "title": "ការជំនួសលេខដោយអក្សរ", "target_exercises": 100},
+        {"id": "G6_L06", "title": "បរិមាត្រ", "target_exercises": 100},
+        {"id": "G6_L07", "title": "ផ្ទៃក្រឡា", "target_exercises": 100},
+        {"id": "G6_L08", "title": "វិធីគុណ និងវិធីចែកចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G6_L09", "title": "តួចែករួមធំបំផុត-ពហុគុណរួមតូចបំផុត", "target_exercises": 100},
+        {"id": "G6_L10", "title": "វិធីបូក និងវិធីដកប្រភាគ", "target_exercises": 100},
+        {"id": "G6_L11", "title": "វិធីគុណ និងវិធីចែកប្រភាគ", "target_exercises": 100},
+        {"id": "G6_L12", "title": "ផលធៀប", "target_exercises": 100},
+        {"id": "G6_L13", "title": "សមមាត្រ", "target_exercises": 100},
+        {"id": "G6_L14", "title": "ល្បឿន", "target_exercises": 100},
+        {"id": "G6_L15", "title": "ប្រមាណវិធីលើចំនួនចម្រុះ", "target_exercises": 100},
+        {"id": "G6_L16", "title": "ភាគរយ", "target_exercises": 100},
+        {"id": "G6_L17", "title": "ការប្រាក់", "target_exercises": 100},
+        {"id": "G6_L18", "title": "ស្ថិតិ", "target_exercises": 100},
+        {"id": "G6_L19", "title": "ប្រមាណវិធីលើរង្វាស់ពេល", "target_exercises": 100},
+        {"id": "G6_L20", "title": "មាឌ និងផ្ទៃក្រឡាសូលីត", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 7,
+      "lessons": [
+        {"id": "G7_L01", "title": "ចំនួនគត់", "target_exercises": 100},
+        {"id": "G7_L02", "title": "តួចែកនិងពហុគុណ", "target_exercises": 100},
+        {"id": "G7_L03", "title": "ចំនួនគត់រ៉ឺឡាទីប", "target_exercises": 100},
+        {"id": "G7_L04", "title": "ប្រភាគ", "target_exercises": 100},
+        {"id": "G7_L05", "title": "ចំនួនទសភាគ", "target_exercises": 100},
+        {"id": "G7_L06", "title": "ភាគរយ", "target_exercises": 100},
+        {"id": "G7_L07", "title": "រង្វាស់រង្វាល់", "target_exercises": 100},
+        {"id": "G7_L08", "title": "កន្សោមពិជគណិត", "target_exercises": 100},
+        {"id": "G7_L09", "title": "សមីការដឺក្រេទី១មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G7_L10", "title": "វិសមភាព", "target_exercises": 100},
+        {"id": "G7_L11", "title": "ផលធៀបនិងសមមាត្រ", "target_exercises": 100},
+        {"id": "G7_L12", "title": "សញ្ញាណដំបូងនៃរូបធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G7_L13", "title": "មុំ", "target_exercises": 100},
+        {"id": "G7_L14", "title": "បន្ទាត់ស្រប បន្ទាត់កែង", "target_exercises": 100},
+        {"id": "G7_L15", "title": "រូបធរណីមាត្រដែលមានវិមាត្រពីរ", "target_exercises": 100},
+        {"id": "G7_L16", "title": "បរិមាត្រនិងផ្ទៃក្រឡាពហុកោណ", "target_exercises": 100},
+        {"id": "G7_L17", "title": "រង្វង់", "target_exercises": 100},
+        {"id": "G7_L18", "title": "មាឌនិងផ្ទៃក្រឡាខាងនៃសូលីត", "target_exercises": 100},
+        {"id": "G7_L19", "title": "ភាពដូច", "target_exercises": 100},
+        {"id": "G7_L20", "title": "ប្រូបាប", "target_exercises": 100},
+        {"id": "G7_L21", "title": "ក្រាបសសរ", "target_exercises": 100},
+        {"id": "G7_L22", "title": "ក្រាបផ្លិត", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 8,
+      "lessons": [
+        {"id": "G8_L01", "title": "ចំនួនសនិទាន", "target_exercises": 100},
+        {"id": "G8_L02", "title": "ស្វ័យគុណ", "target_exercises": 100},
+        {"id": "G8_L03", "title": "ទំហំសមមាត្រនិងភាគរយ", "target_exercises": 100},
+        {"id": "G8_L04", "title": "រង្វាស់រង្វាល់", "target_exercises": 100},
+        {"id": "G8_L05", "title": "កន្សោមពិជគណិត", "target_exercises": 100},
+        {"id": "G8_L06", "title": "កន្សោមសនិទាន", "target_exercises": 100},
+        {"id": "G8_L07", "title": "សមីការដឺក្រេទី១មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G8_L08", "title": "វិសមីការដឺក្រេទី១មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G8_L09", "title": "ប្លង់កូអរដោនេនិងក្រាប", "target_exercises": 100},
+        {"id": "G8_L10", "title": "ស្ថិតិ", "target_exercises": 100},
+        {"id": "G8_L11", "title": "ប្រូបាប", "target_exercises": 100},
+        {"id": "G8_L12", "title": "ការប្រៀបធៀបត្រីកោណ", "target_exercises": 100},
+        {"id": "G8_L13", "title": "ចតុកោណ", "target_exercises": 100},
+        {"id": "G8_L14", "title": "ផ្ទៃក្រឡាពហុកោណ", "target_exercises": 100},
+        {"id": "G8_L15", "title": "រង្វង់", "target_exercises": 100},
+        {"id": "G8_L16", "title": "បន្ទាត់និងអង្កត់ពិសេសជួបគ្នានៅក្នុងត្រីកោណ", "target_exercises": 100},
+        {"id": "G8_L17", "title": "រូបធរណីមាត្រដែលមានវិមាត្របី", "target_exercises": 100},
+        {"id": "G8_L18", "title": "មាត្រដ្ឋាន", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 9,
+      "lessons": [
+        {"id": "G9_L01", "title": "ចំនួនអសនិទាន", "target_exercises": 100},
+        {"id": "G9_L02", "title": "សមមាត្រ", "target_exercises": 100},
+        {"id": "G9_L03", "title": "កន្សោមពិជគណិត", "target_exercises": 100},
+        {"id": "G9_L04", "title": "សមីការដឺក្រេទី១មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G9_L05", "title": "វិសមីការដឺក្រេទី១មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G9_L06", "title": "បំរែងចែកប្រេកង់", "target_exercises": 100},
+        {"id": "G9_L07", "title": "មធ្យមស្ថិតិ", "target_exercises": 100},
+        {"id": "G9_L08", "title": "ប្រូបាប", "target_exercises": 100},
+        {"id": "G9_L09", "title": "ចម្ងាយរវាងពីរចំណុច", "target_exercises": 100},
+        {"id": "G9_L10", "title": "សមីការនៃបន្ទាត់", "target_exercises": 100},
+        {"id": "G9_L11", "title": "ប្រព័ន្ធសមីការដឺក្រេទី១មានពីរអញ្ញាត", "target_exercises": 100},
+        {"id": "G9_L12", "title": "ទ្រឹស្តីបទពីរតាក័រ", "target_exercises": 100},
+        {"id": "G9_L13", "title": "រង្វង់និងបន្ទាត់", "target_exercises": 100},
+        {"id": "G9_L14", "title": "លក្ខណៈមុំនៃរង្វង់", "target_exercises": 100},
+        {"id": "G9_L15", "title": "ទ្រឹស្តីបទតាលែស", "target_exercises": 100},
+        {"id": "G9_L16", "title": "ត្រីកោណដូចគ្នា", "target_exercises": 100},
+        {"id": "G9_L17", "title": "ពហុកោណ", "target_exercises": 100},
+        {"id": "G9_L18", "title": "សូលីត", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 10,
+      "lessons": [
+        {"id": "G10_L01", "title": "តក្កវិទ្យា", "target_exercises": 100},
+        {"id": "G10_L02", "title": "សំណុំ", "target_exercises": 100},
+        {"id": "G10_L03", "title": "ចំនួន", "target_exercises": 100},
+        {"id": "G10_L04", "title": "ពហុធា", "target_exercises": 100},
+        {"id": "G10_L05", "title": "ប្រមាណវិធីចែកពហុធា", "target_exercises": 100},
+        {"id": "G10_L06", "title": "សមីការដឺក្រេទី២មានមួយអញ្ញាត", "target_exercises": 100},
+        {"id": "G10_L07", "title": "ប្រព័ន្ធសមីការដឺក្រេលីនេអ៊ែរ", "target_exercises": 100},
+        {"id": "G10_L08", "title": "វិសមីការ", "target_exercises": 100},
+        {"id": "G10_L09", "title": "កូអរដោនេនៃចំណុច", "target_exercises": 100},
+        {"id": "G10_L10", "title": "សមីការបន្ទាត់", "target_exercises": 100},
+        {"id": "G10_L11", "title": "សមីការរង្វង់", "target_exercises": 100},
+        {"id": "G10_L12", "title": "ដំណោះស្រាយវិសមីការតាមក្រាប", "target_exercises": 100},
+        {"id": "G10_L13", "title": "អនុគមន៍ និងក្រាបនៃអនុគមន៍", "target_exercises": 100},
+        {"id": "G10_L14", "title": "អនុគមន៍ដឺក្រេទី២ និងក្រាបរបស់វា", "target_exercises": 100},
+        {"id": "G10_L15", "title": "អនុគមន៍សនិទាន អនុគមន៍អសនិទាន", "target_exercises": 100},
+        {"id": "G10_L16", "title": "ផលធៀបត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G10_L17", "title": "ការអនុវត្តផលធៀបត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G10_L18", "title": "បំរែងចែកប្រេកង់និងការសាងក្រាប", "target_exercises": 100},
+        {"id": "G10_L19", "title": "រង្វាស់ទីតាំង", "target_exercises": 100},
+        {"id": "G10_L20", "title": "បម្លាស់", "target_exercises": 100},
+        {"id": "G10_L21", "title": "បន្សំ", "target_exercises": 100},
+        {"id": "G10_L22", "title": "វ៉ិចទ័រនិងប្រមាណវិធីលើវ៉ិចទ័រ", "target_exercises": 100},
+        {"id": "G10_L23", "title": "ការអនុវត្តវ៉ិចទ័រ", "target_exercises": 100},
+        {"id": "G10_L24", "title": "បម្លែងកិល", "target_exercises": 100},
+        {"id": "G10_L25", "title": "បម្លែងឆ្លុះ", "target_exercises": 100},
+        {"id": "G10_L26", "title": "បម្លែងវិល", "target_exercises": 100},
+        {"id": "G10_L27", "title": "បម្លែងចាត", "target_exercises": 100},
+        {"id": "G10_L28", "title": "រូបធរណីមាត្រក្នុងលំហ", "target_exercises": 100},
+        {"id": "G10_L29", "title": "បន្ទាត់និងប្លង់ស្របក្នុងលំហ", "target_exercises": 100},
+        {"id": "G10_L30", "title": "ភាពអក្សែកែងគ្នាក្នុងលំហ", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 11,
+      "lessons": [
+        {"id": "G11_L01", "title": "ស្វ៊ីតចំនួនពិត", "target_exercises": 100},
+        {"id": "G11_L02", "title": "ស្វ៊ីតធរណី", "target_exercises": 100},
+        {"id": "G11_L03", "title": "ស្វ៊ីតនព្វន្ត", "target_exercises": 100},
+        {"id": "G11_L04", "title": "ផលបូកតួនៃស្វ៊ីតផ្សេងៗ", "target_exercises": 100},
+        {"id": "G11_L05", "title": "ទំនាក់ទំនងកើននៃស្វ៊ីត", "target_exercises": 100},
+        {"id": "G11_L06", "title": "វិធានអនុមានរួមគណិតវិទ្យា", "target_exercises": 100},
+        {"id": "G11_L07", "title": "អនុគមន៍អិចប៉ូណង់ស្យែល", "target_exercises": 100},
+        {"id": "G11_L08", "title": "អនុគមន៍ឡការីត", "target_exercises": 100},
+        {"id": "G11_L09", "title": "អនុគមន៍និងស្វ័យគុណសនិទាន", "target_exercises": 100},
+        {"id": "G11_L10", "title": "អនុគមន៍ត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G11_L11", "title": "រូបមន្តត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G11_L12", "title": "សមីការនិងវិសមីការត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G11_L13", "title": "ម៉ាទ្រីស", "target_exercises": 100},
+        {"id": "G11_L14", "title": "ដេធែរមីណង់", "target_exercises": 100},
+        {"id": "G11_L15", "title": "បំលែងលីនេអ៊ែរ", "target_exercises": 100},
+        {"id": "G11_L16", "title": "លីមីតនិងដេរីវេ", "target_exercises": 100},
+        {"id": "G11_L17", "title": "អនុវត្តដេរីវេ", "target_exercises": 100},
+        {"id": "G11_L18", "title": "អថិភាពនិងក្រាបនៃអនុគមន៍", "target_exercises": 100},
+        {"id": "G11_L19", "title": "អនុវត្តដេរីវេចំពោះសមីការនិងវិសមីការ", "target_exercises": 100},
+        {"id": "G11_L20", "title": "ប្រូបាប", "target_exercises": 100},
+        {"id": "G11_L21", "title": "ប្រូបាបមានលក្ខខណ្ឌ", "target_exercises": 100},
+        {"id": "G11_L22", "title": "ស្ថិតិ", "target_exercises": 100},
+        {"id": "G11_L23", "title": "ចំនួនកុំផ្លិចទម្រង់ពិជគណិត", "target_exercises": 100},
+        {"id": "G11_L24", "title": "ចំនួនកុំផ្លិចទម្រង់ត្រីកោណមាត្រ", "target_exercises": 100},
+        {"id": "G11_L25", "title": "ស្វ័យគុណទី n និងឫសទី n នៃចំនួនកុំផ្លិច", "target_exercises": 100},
+        {"id": "G11_L26", "title": "អនុវត្តចំនួនកុំផ្លិចក្នុងធរណីមាត្រ", "target_exercises": 100},
+        {"id": "G11_L27", "title": "វ៉ិចទ័រក្នុងលំហ", "target_exercises": 100},
+        {"id": "G11_L28", "title": "សមីការបន្ទាត់និងសមីការប្លង់ក្នុងលំហ", "target_exercises": 100}
+      ]
+    },
+    {
+      "grade": 12,
+      "lessons": [
+        {"id": "G12_L01", "title": "លីមីតនៃអនុគមន៍", "target_exercises": 100},
+        {"id": "G12_L02", "title": "ភាពជាប់នៃអនុគមន៍", "target_exercises": 100},
+        {"id": "G12_L03", "title": "លីមីតនៃស្វ៊ីត", "target_exercises": 100},
+        {"id": "G12_L04", "title": "ដេរីវេនៃអនុគមន៍ និងអនុវត្តន៍", "target_exercises": 100},
+        {"id": "G12_L05", "title": "សិក្សាអថិភាពនិងសង់ក្រាបអនុគមន៍សនិទាន", "target_exercises": 100},
+        {"id": "G12_L06", "title": "សិក្សាអថិភាពនិងសង់ក្រាបអនុគមន៍អិចប៉ូណង់ស្យែល", "target_exercises": 100},
+        {"id": "G12_L07", "title": "សិក្សាអថិភាពនិងសង់ក្រាបអនុគមន៍ឡការីត", "target_exercises": 100},
+        {"id": "G12_L08", "title": "អនុគមន៍អសនិទាន", "target_exercises": 100},
+        {"id": "G12_L09", "title": "អនុគមន៍ត្រីកោណមាត្រចម្រុះ", "target_exercises": 100},
+        {"id": "G12_L10", "title": "ព្រីមីទីវនិងអាំងតេក្រាលមិនកំណត់", "target_exercises": 100},
+        {"id": "G12_L11", "title": "អាំងតេក្រាលកំណត់", "target_exercises": 100},
+        {"id": "G12_L12", "title": "មាឌសូលីតនិងប្រវែងធ្នូ", "target_exercises": 100},
+        {"id": "G12_L13", "title": "សមីការឌីផេរ៉ង់ស្យែលលីនេអ៊ែរលំដាប់ទី១", "target_exercises": 100},
+        {"id": "G12_L14", "title": "សមីការឌីផេរ៉ង់ស្យែលលីនេអ៊ែរលំដាប់ទី២", "target_exercises": 100},
+        {"id": "G12_L15", "title": "ស្ថិតិមានពីរអថេរ និងសមីការបន្ទាត់តម្រែតម្រង់លីនេអ៊ែរ", "target_exercises": 100},
+        {"id": "G12_L16", "title": "បំរែងចែកប្រូបាប និងបំរែងចែកទ្វេធា/ណ័រម៉ាល់", "target_exercises": 100},
+        {"id": "G12_L17", "title": "កោនិក (ប៉ារ៉ាបូល អេលីប អ៊ីពែបូល)", "target_exercises": 100},
+        {"id": "G12_L18", "title": "ផលគុណនៃពីរវ៉ិចទ័រក្នុងលំហ និងអនុវត្តន៍", "target_exercises": 100},
+        {"id": "G12_L19", "title": "ភាពចែកដាច់ ចំនួនបឋម និងវិធីចែកអឺគ្លីត", "target_exercises": 100},
+        {"id": "G12_L20", "title": "សមីការប៉ារ៉ាម៉ែត្រនិងកូអរដោនេប៉ូលែ", "target_exercises": 100}
+      ]
     }
-    return questions;
+  ]
 }
-
-let currentQuestions = [];
-let countdown;
-let timeLeft = 30 * 60; // ៣០ នាទី
-
-const gradesList = document.getElementById('grades-list');
-for (let i = 1; i <= 12; i++) {
-    let btn = document.createElement('button');
-    btn.innerText = `ថ្នាក់ទី ${i}`;
-    btn.onclick = () => startQuiz(i);
-    gradesList.appendChild(btn);
-}
-
-function startQuiz(grade) {
-    currentQuestions = generateQuestions(grade);
-    document.getElementById('grade-screen').classList.remove('active');
-    document.getElementById('quiz-screen').classList.add('active');
-    document.getElementById('quiz-title').innerText = `វិញ្ញាសាប្រឡងគណិតវិទ្យា - ថ្នាក់ទី ${grade} (១០០ សំណួរ)`;
-    renderQuestions();
-    startTimer();
-}
-
-function renderQuestions() {
-    const container = document.getElementById('questions-container');
-    container.innerHTML = "";
-    currentQuestions.forEach((q, qIndex) => {
-        let qDiv = document.createElement('div');
-        qDiv.className = 'question-box';
-        qDiv.innerHTML = `<p><strong>លំហាត់ទី ${qIndex + 1}: ${q.q}</strong></p>`;
-        let optDiv = document.createElement('div');
-        optDiv.className = 'options-box';
-        q.a.forEach((opt, oIndex) => {
-            optDiv.innerHTML += `<label><input type="radio" name="q_${qIndex}" value="${oIndex}"> ${opt}</label>`;
-        });
-        qDiv.appendChild(optDiv);
-        container.appendChild(qDiv);
-    });
-}
-
-function startTimer() {
-    timeLeft = 30 * 60;
-    countdown = setInterval(() => {
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
-            alert("អស់ម៉ោងហើយ! ប្រព័ន្ធនឹងប្រគល់កិច្ចការដោយស្វ័យប្រវត្តិ។");
-            submitQuiz();
-        } else {
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            document.getElementById('timer').innerText = `ពេលវេលានៅសល់៖ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-    }, 1000);
-}
-
-function submitQuiz() {
-    clearInterval(countdown);
-    let score = 0;
-    let reviewHtml = "";
-    currentQuestions.forEach((q, qIndex) => {
-        let selected = document.querySelector(`input[name="q_${qIndex}"]:checked`);
-        let userAns = selected ? parseInt(selected.value) : -1;
-        if (userAns === q.correct) {
-            score++;
-            reviewHtml += `<p style="color:green;">✔️ លំហាត់ទី ${qIndex+1}៖ ត្រឹមត្រូវ! (ចម្លើយ៖ ${q.a[q.correct]})</p>`;
-        } else {
-            reviewHtml += `<p style="color:red;">❌ លំហាត់ទី ${qIndex+1}៖ ខុសហើយ! (ចម្លើយត្រូវគឺ៖ ${q.a[q.correct]})</p>`;
-        }
-    });
-    document.getElementById('quiz-screen').classList.remove('active');
-    document.getElementById('result-screen').classList.add('active');
-    document.getElementById('score-text').innerText = `អ្នកទទួលបានពិន្ទុ៖ ${score} / ${currentQuestions.length}`;
-    document.getElementById('review-container').innerHTML = reviewHtml;
-}
-</script>
-</body>
-</html>
