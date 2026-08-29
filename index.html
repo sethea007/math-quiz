@@ -3,81 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ប្រព័ន្ធតេស្តគណិតវិទ្យា (១០០ សំណួរ / ៣០នាទី)</title>
+  <title>ប្រព័ន្ធតេស្តគណិតវិទ្យា</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- KaTeX for rendering Math Formulas -->
+  <!-- KaTeX for Rendering Math -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&display=swap');
+    body { font-family: 'Kantumruy Pro', sans-serif; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+<body class="bg-slate-100 text-slate-800 min-h-screen">
 
   <div class="max-w-4xl mx-auto p-4">
-    <!-- Header / Control Panel -->
-    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-      <h1 class="text-2xl font-bold text-indigo-600 mb-4">ប្រព័ន្ធស្ទង់សមត្ថភាពគណិតវិទ្យា</h1>
+    <!-- Header Selection -->
+    <div class="bg-white rounded-2xl shadow-md p-6 mb-6">
+      <h1 class="text-2xl font-bold text-indigo-700 text-center mb-6">ប្រព័ន្ធតេស្តគណិតវិទ្យា (ថ្នាក់ទី១ - ទី១២)</h1>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div>
-          <label class="block text-sm font-medium mb-1">ជ្រើសរើសថ្នាក់៖</label>
-          <select id="gradeSelect" class="w-full border rounded-lg p-2" onchange="loadLessons()">
-            <option value="12">ថ្នាក់ទី ១២</option>
-            <option value="11">ថ្នាក់ទី ១១</option>
+          <label class="block text-sm font-semibold mb-1">១. ជ្រើសរើសថ្នាក់៖</label>
+          <select id="gradeSelect" class="w-full border rounded-xl p-2.5 bg-slate-50" onchange="onGradeChange()">
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">ជ្រើសរើសមេរៀន៖</label>
-          <select id="lessonSelect" class="w-full border rounded-lg p-2"></select>
+          <label class="block text-sm font-semibold mb-1">២. ជ្រើសរើសមេរៀន៖</label>
+          <select id="lessonSelect" class="w-full border rounded-xl p-2.5 bg-slate-50">
+          </select>
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">ជ្រើសរើសលេខតេស្ត (១-១០០)៖</label>
-          <input type="number" id="testNo" value="1" min="1" max="100" class="w-full border rounded-lg p-2">
+          <label class="block text-sm font-semibold mb-1">៣. លេខតេស្ត (១-១០០)៖</label>
+          <input type="number" id="testNo" value="1" min="1" max="100" class="w-full border rounded-xl p-2.5 bg-slate-50">
         </div>
       </div>
 
-      <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition">
+      <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition">
         ចាប់ផ្តើមធ្វើតេស្ត (១០០ សំណួរ / ៣០នាទី)
       </button>
     </div>
 
-    <!-- Quiz Area -->
-    <div id="quizContainer" class="hidden bg-white rounded-xl shadow-md p-6">
-      <!-- Quiz Header -->
+    <!-- Quiz Panel -->
+    <div id="quizContainer" class="hidden bg-white rounded-2xl shadow-md p-6">
       <div class="flex justify-between items-center border-b pb-4 mb-4">
         <div>
-          <span id="quizTitle" class="font-bold text-lg text-indigo-600"></span>
-          <p class="text-sm text-gray-500">សំណួរទី <span id="currentQNum">1</span> / 100</p>
+          <span id="quizTitle" class="font-bold text-lg text-indigo-700 block"></span>
+          <p class="text-sm text-slate-500">សំណួរទី <span id="currentQNum" class="font-bold">1</span> / 100</p>
         </div>
-        <div class="text-right">
-          <span class="text-xs text-gray-500 block">ពេលនៅសល់</span>
-          <span id="timer" class="text-xl font-bold text-red-500">30:00</span>
+        <div class="bg-red-50 border border-red-200 rounded-lg px-4 py-1 text-right">
+          <span class="text-xs text-red-500 block">ពេលនៅសល់</span>
+          <span id="timer" class="text-xl font-bold text-red-600 font-mono">30:00</span>
         </div>
       </div>
 
-      <!-- Question Content -->
       <div class="mb-6">
-        <h2 id="questionText" class="text-lg font-medium mb-4"></h2>
+        <h2 id="questionText" class="text-lg font-semibold mb-4 text-slate-800"></h2>
         <div id="optionsContainer" class="space-y-3"></div>
       </div>
 
-      <!-- Navigation Buttons -->
-      <div class="flex justify-between pt-4 border-t">
-        <button onclick="prevQuestion()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">ត្រឡប់ក្រោយ</button>
-        <button onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">បន្ទាប់</button>
+      <div class="flex justify-between border-t pt-4">
+        <button onclick="prevQuestion()" class="px-4 py-2 bg-slate-200 rounded-lg">ត្រឡប់ក្រោយ</button>
+        <button onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg">បន្ទាប់</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ទិន្នន័យមេរៀនតាមថ្នាក់
-    const curriculumData = {
-      12: [
-        { id: 'g12_cplx', name: 'ចំនួនកុំផ្លិច' },
-        { id: 'g12_lim', name: 'លីមីតនៃអនុគមន៍' },
-        { id: 'g12_integ', name: 'អាំងតេក្រាល' }
-      ],
-      11: [
-        { id: 'g11_trig', name: 'ត្រីកោណមាត្រ' }
-      ]
+    // -------------------------------------------------------------
+    // ទិន្នន័យមេរៀនទាំងអស់ រៀបចំតាមថ្នាក់ និងតាមមេរៀន (Data Hub)
+    // -------------------------------------------------------------
+    const mathDatabase = {
+      "G12": {
+        title: "ថ្នាក់ទី ១២",
+        lessons: [
+          { id: "G12_L1", name: "មេរៀនទី១: លីមីត និងភាពជាប់" },
+          { id: "G12_L2", name: "មេរៀនទី២: ដេរីវេ និងអនុវត្តន៍" },
+          { id: "G12_L3", name: "មេរៀនទី៣: អាំងតេក្រាល" },
+          { id: "G12_L4", name: "មេរៀនទី៤: ចំនួនកុំផ្លិច" }
+        ]
+      },
+      "G11": {
+        title: "ថ្នាក់ទី ១១",
+        lessons: [
+          { id: "G11_L1", name: "មេរៀនទី១: ស្វ៊ីតចំនួនពិត" },
+          { id: "G11_L2", name: "មេរៀនទី២: អនុគមន៍អិចប៉ូណង់ស្យែល" },
+          { id: "G11_L3", name: "មេរៀនទី៣: ត្រីកោណមាត្រ" }
+        ]
+      },
+      "G10": {
+        title: "ថ្នាក់ទី ១០",
+        lessons: [
+          { id: "G10_L1", name: "មេរៀនទី១: ពហុធា" },
+          { id: "G10_L2", name: "មេរៀនទី២: សមីការ និងវិសមីការ" }
+        ]
+      }
+      // អ្នកអាចបន្ថែម G9, G8, G7... រហូតដល់ G1 តាមលំនាំនេះបាន
     };
 
     let currentQuestions = [];
@@ -85,66 +105,80 @@
     let userAnswers = {};
     let timerInterval = null;
 
-    // Load Lessons dropdown
-    function loadLessons() {
-      const grade = document.getElementById('gradeSelect').value;
+    // Load Grades ចូល Dropdown
+    function initApp() {
+      const gradeSelect = document.getElementById('gradeSelect');
+      gradeSelect.innerHTML = '';
+      for (let key in mathDatabase) {
+        gradeSelect.innerHTML += `<option value="${key}">${mathDatabase[key].title}</option>`;
+      }
+      onGradeChange();
+    }
+
+    // Load Lessons តាម Grade ដែលបានជ្រើសរើស
+    function onGradeChange() {
+      const gradeKey = document.getElementById('gradeSelect').value;
       const lessonSelect = document.getElementById('lessonSelect');
       lessonSelect.innerHTML = '';
-      curriculumData[grade].forEach(lesson => {
+      
+      const lessons = mathDatabase[gradeKey].lessons;
+      lessons.forEach(lesson => {
         lessonSelect.innerHTML += `<option value="${lesson.id}">${lesson.name}</option>`;
       });
     }
 
-    // Dynamic Math Question Generator (បង្កើត ១០០ សំណួរស្វ័យប្រវត្តិ)
-    function generateQuestions(lessonId, testNo) {
-      const questions = [];
-      const seed = testNo * 100; // ដកស្រង់ក្បួនលេខតាមលេខតេស្ត
+    // បង្កើត ១០០ សំណួរ តាមមេរៀន និងលេខតេស្ត
+    function generate100Questions(lessonId, testNo) {
+      let questions = [];
+      let seed = testNo * 99;
 
       for (let i = 1; i <= 100; i++) {
-        let a = (i + seed) % 10 + 1;
-        let b = (i * 2 + seed) % 10 + 1;
-        
-        if (lessonId === 'g12_cplx') {
-          // គំរូសំណួរចំនួនកុំផ្លិច
-          let ans = Math.sqrt(a*a + b*b).toFixed(2);
+        let a = ((i + seed) % 20) + 2;
+        let b = ((i * 2 + seed) % 15) + 1;
+
+        if (lessonId === 'G12_L4') { // ចំនួនកុំផ្លិច
+          let ans = Math.sqrt(a * a + b * b).toFixed(2);
           questions.push({
-            id: i,
-            text: `រកម៉ូឌុលនៃចំនួនកុំផ្លិច $z = ${a} + ${b}i$`,
-            options: [`${ans}`, `${a + b}`, `${a * b}`, `${(a*a + b*b)}`],
-            correct: 0,
-            explanation: `|z| = \\sqrt{${a}^2 + ${b}^2} = ${ans}`
+            text: `គណនាម៉ូឌុលនៃចំនួនកុំផ្លិច $z = ${a} + ${b}i$`,
+            options: [`$|z| = ${ans}$`, `$|z| = ${a + b}$`, `$|z| = ${a * b}$`, `$|z| = ${a * a + b * b}$`],
+            correct: 0
           });
-        } else {
-          // គំរូសំណួរបូកលេខទូទៅ
+        } else if (lessonId === 'G12_L3') { // អាំងតេក្រាល
           questions.push({
-            id: i,
-            text: `គណនាតម្លៃនៃ $x = ${a} + ${b}$`,
-            options: [`${a + b}`, `${a - b}`, `${a * b}`, `${a + b + 1}`],
-            correct: 0,
-            explanation: `${a} + ${b} = ${a + b}`
+            text: `គណនាអាំងតេក្រាល $\\int ${a}x\\, dx$`,
+            options: [`$\\frac{${a}}{2}x^2 + C$`, `$${a}x^2 + C$`, `$${a} + C$`, `$\\frac{1}{${a}}x^2 + C$`],
+            correct: 0
+          });
+        } else { // លំហាត់ទូទៅ
+          let res = a + b;
+          questions.push({
+            text: `គណនាតម្លៃនៃកន្សោម $x = ${a} + ${b}$`,
+            options: [`$${res}$`, `$${res + 2}$`, `$${res - 1}$`, `$${res + 5}$`],
+            correct: 0
           });
         }
       }
       return questions;
     }
 
-    // ចាប់ផ្តើមធ្វើតេស្ត
     function startQuiz() {
-      const lessonId = document.getElementById('lessonSelect').value;
-      const testNo = parseInt(document.getElementById('testNo').value);
-      
-      currentQuestions = generateQuestions(lessonId, testNo);
+      const gradeKey = document.getElementById('gradeSelect').value;
+      const lessonSelect = document.getElementById('lessonSelect');
+      const lessonName = lessonSelect.options[lessonSelect.selectedIndex].text;
+      const lessonId = lessonSelect.value;
+      const testNo = parseInt(document.getElementById('testNo').value) || 1;
+
+      currentQuestions = generate100Questions(lessonId, testNo);
       currentIndex = 0;
       userAnswers = {};
 
       document.getElementById('quizContainer').classList.remove('hidden');
-      document.getElementById('quizTitle').innerText = `តេស្តទី ${testNo} (១០០ សំណួរ)`;
-      
+      document.getElementById('quizTitle').innerText = `${mathDatabase[gradeKey].title} - ${lessonName} (តេស្តទី ${testNo})`;
+
       startTimer(30 * 60); // ៣០ នាទី
       renderQuestion();
     }
 
-    // បង្ហាញសំណួរតាម Index
     function renderQuestion() {
       const q = currentQuestions[currentIndex];
       document.getElementById('currentQNum').innerText = currentIndex + 1;
@@ -156,9 +190,9 @@
       q.options.forEach((opt, idx) => {
         const isSelected = userAnswers[currentIndex] === idx;
         optsContainer.innerHTML += `
-          <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-slate-50 ${isSelected ? 'border-indigo-600 bg-indigo-50' : ''}">
+          <label class="flex items-center p-3 border rounded-xl cursor-pointer ${isSelected ? 'border-indigo-600 bg-indigo-50' : 'border-slate-200'}">
             <input type="radio" name="option" class="hidden" onclick="selectAnswer(${idx})" ${isSelected ? 'checked' : ''}>
-            <span class="w-7 h-7 rounded-full border flex items-center justify-center mr-3 font-semibold text-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-gray-100'}">
+            <span class="w-7 h-7 rounded-full border flex items-center justify-center mr-3 font-bold text-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100'}">
               ${String.fromCharCode(65 + idx)}
             </span>
             <span>${opt}</span>
@@ -166,9 +200,10 @@
         `;
       });
 
-      // Render KaTeX Formulas
       if (window.renderMathInElement) {
-        renderMathInElement(document.getElementById('quizContainer'));
+        renderMathInElement(document.getElementById('quizContainer'), {
+          delimiters: [{left: '$', right: '$', display: false}]
+        });
       }
     }
 
@@ -191,26 +226,25 @@
       }
     }
 
-    // នាឡិការ៉ាប់ថយក្រោយ ៣០ នាទី
     function startTimer(seconds) {
       clearInterval(timerInterval);
       let timeRemaining = seconds;
-      
+
       timerInterval = setInterval(() => {
         const min = Math.floor(timeRemaining / 60);
         const sec = timeRemaining % 60;
         document.getElementById('timer').innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-        
+
         if (timeRemaining <= 0) {
           clearInterval(timerInterval);
-          alert('អស់ချိန်ធ្វើតេស្តហើយ!');
+          alert('អស់ချိန်ធ្វើតេស្ត!');
         }
         timeRemaining--;
       }, 1000);
     }
 
-    // Init
-    loadLessons();
+    // ចាប់ផ្តើមដំណើរការ
+    initApp();
   </script>
 </body>
 </html>
