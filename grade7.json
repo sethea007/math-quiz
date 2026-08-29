@@ -1,0 +1,126 @@
+{
+  "grade": 7,
+  "title": "ថ្នាក់ទី ៧",
+  "lessons": [
+    {
+      "lesson_id": "G7_L01",
+      "lesson_title": "មេរៀនទី១៖ ចំនួនគត់រ៉ឺឡាទីវ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាតម្លៃនៃ $(-8) + (-5)$",
+          "options": ["$-13$", "$13$", "$-3$", "$3$"],
+          "answer": 0,
+          "explanation": "ផលបូកចំនួនអវិជ្ជមានពីរគឺ $(-8) + (-5) = -(8 + 5) = -13$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L02",
+      "lesson_title": "មេរៀនទី២៖ ប្រភាគ និងចំនួនទសភាគ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "បម្លែងប្រភាគ $\\frac{3}{4}$ ទៅជាចំនួនទសភាគ",
+          "options": ["$0.75$", "$0.34$", "$0.5$", "$1.25$"],
+          "answer": 0,
+          "explanation": "ចែក ៣ នឹង ៤ ៖ $3 \\div 4 = 0.75$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L03",
+      "lesson_title": "មេរៀនទី៣៖ ភាគរយ និងផលធៀប",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនា $20\\%$ នៃ $150$",
+          "options": ["$30$", "$20$", "$15$", "$45$"],
+          "answer": 0,
+          "explanation": "$\\frac{20}{100} \\times 150 = 0.2 \\times 150 = 30$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L04",
+      "lesson_title": "មេរៀនទី៤៖ កន្សោមពិជគណិត (កម្រិតដំបូង)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "សម្រួលកន្សោម $3x + 5x - 2x$",
+          "options": ["$6x$", "$10x$", "$4x$", "$x$"],
+          "answer": 0,
+          "explanation": "$(3 + 5 - 2)x = 6x$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L05",
+      "lesson_title": "មេរៀនទី៥៖ សមីការដឺក្រេទី១មានមួយអញ្ញាត (កម្រិតដំបូង)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកតម្លៃ $x$ ក្នុងសមីការ $x + 7 = 12$",
+          "options": ["$5$", "$19$", "$-5$", "$7$"],
+          "answer": 0,
+          "explanation": "$x = 12 - 7 = 5$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L06",
+      "lesson_title": "មេរៀនទី៦៖ ធរណីមាត្រគ្រឹះ (ចំណុច បន្ទាត់ និងមុំ)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "មុំរ៉ាបមានរង្វាស់ស្មើនឹងប៉ុន្មានដឺក្រេ?",
+          "options": ["$180^\\circ$", "$90^\\circ$", "$360^\\circ$", "$45^\\circ$"],
+          "answer": 0,
+          "explanation": "មុំរ៉ាប (Straight angle) មានរង្វាស់ស្មើនឹង $180^\\circ$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L07",
+      "lesson_title": "មេរៀនទី៧៖ បរិមាត្រ និងក្រឡាផ្ទៃរូបប្លង់ងាយៗ",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "គណនាបរិមាត្រការ៉េដែលមានជ្រុងប្រវែង $6\\text{ cm}$",
+          "options": ["$24\\text{ cm}$", "$36\\text{ cm}$", "$12\\text{ cm}$", "$18\\text{ cm}$"],
+          "answer": 0,
+          "explanation": "បរិមាត្រការ៉េ $P = 4 \\times a = 4 \\times 6 = 24\\text{ cm}$"
+        }
+      ]
+    },
+    {
+      "lesson_id": "G7_L08",
+      "lesson_title": "មេរៀនទី៨៖ ស្ថិតិ (ការអាន និងសង់តារាងទិន្នន័យ)",
+      "duration_minutes": 30,
+      "total_questions": 100,
+      "sample_questions": [
+        {
+          "id": 1,
+          "question": "រកម៉ូត (Mode) នៃបណ្តុំទិន្នន័យ៖ $3, 5, 5, 7, 8, 5, 9$",
+          "options": ["$5$", "$7$", "$3$", "$9$"],
+          "answer": 0,
+          "explanation": "ម៉ូតគឺជាទិន្នន័យដែលមានប្រេកង់ច្រើនជាងគេ (លេចឡើងច្រើនដងគេ) $\\implies 5$"
+        }
+      ]
+    }
+  ]
+}
