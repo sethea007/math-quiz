@@ -1,664 +1,216 @@
 <!DOCTYPE html>
 <html lang="km">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធស្ទង់សមត្ថភាពគណិតវិទ្យា ថ្នាក់ទី១ - ថ្នាក់ទី១២</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font - Siemreap / Kantumruy Pro / Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- KaTeX for math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-
-    <style>
-        body {
-            font-family: 'Kantumruy Pro', 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        .math-expr {
-            font-family: 'Inter', serif;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-        .gradient-header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        }
-        .option-card {
-            transition: all 0.2s ease-in-out;
-        }
-        .option-card:hover {
-            transform: translateY(-2px);
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ប្រព័ន្ធតេស្តគណិតវិទ្យា (១០០ សំណួរ / ៣០នាទី)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX for rendering Math Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
 
-    <!-- HEADER -->
-    <header class="gradient-header text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="bg-white/20 p-3 rounded-2xl backdrop-blur-md">
-                    <i class="fa-solid fa-calculator text-2xl text-amber-300"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight">តេស្តស្ទង់សមត្ថភាពគណិតវិទ្យា</h1>
-                    <p class="text-xs text-blue-100">កម្មវិធីប្រឡង និងតេស្តសមត្ថភាព ថ្នាក់ទី១ - ទី១២</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <span id="current-user-badge" class="hidden md:inline-block bg-white/10 px-3 py-1.5 rounded-full text-xs font-medium border border-white/20">
-                    <i class="fa-solid fa-user-graduate mr-1"></i> សិស្សសាកល្បង
-                </span>
-                <button onclick="resetApp()" class="bg-red-500/80 hover:bg-red-600 text-white text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow">
-                    <i class="fa-solid fa-rotate-right"></i> ចាប់ផ្ដើមឡើងវិញ
-                </button>
-            </div>
+  <div class="max-w-4xl mx-auto p-4">
+    <!-- Header / Control Panel -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+      <h1 class="text-2xl font-bold text-indigo-600 mb-4">ប្រព័ន្ធស្ទង់សមត្ថភាពគណិតវិទ្យា</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">ជ្រើសរើសថ្នាក់៖</label>
+          <select id="gradeSelect" class="w-full border rounded-lg p-2" onchange="loadLessons()">
+            <option value="12">ថ្នាក់ទី ១២</option>
+            <option value="11">ថ្នាក់ទី ១១</option>
+          </select>
         </div>
-    </header>
-
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-5xl mx-auto w-full px-4 py-8 flex-grow">
-
-        <!-- SCREEN 1: GRADE SELECTION -->
-        <section id="screen-grade-select" class="space-y-6">
-            <div class="text-center max-w-2xl mx-auto space-y-2">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-800">សូមជ្រើសរើសកម្រិតថ្នាក់សិក្សា</h2>
-                <p class="text-slate-500 text-sm">ជ្រើសរើសថ្នាក់ដែលអ្នកចង់ធ្វើតេស្ត ដើម្បីស្ទង់មើលកម្រិតយល់ដឹង និងជំនាញគណិតវិទ្យា</p>
-            </div>
-
-            <!-- Grade Category Tabs -->
-            <div class="flex justify-center gap-2 border-b border-slate-200 pb-2">
-                <button onclick="filterGrades('all')" id="tab-all" class="tab-btn px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white shadow">ទាំងអស់</button>
-                <button onclick="filterGrades('primary')" id="tab-primary" class="tab-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100">បឋមសិក្សា (១-៦)</button>
-                <button onclick="filterGrades('secondary')" id="tab-secondary" class="tab-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100">អនុវិទ្យាល័យ (៧-៩)</button>
-                <button onclick="filterGrades('high')" id="tab-high" class="tab-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100">វិទ្យាល័យ (១០-១២)</button>
-            </div>
-
-            <!-- Grade Grid -->
-            <div id="grade-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                <!-- Generated dynamically via JS -->
-            </div>
-        </section>
-
-        <!-- SCREEN 2: QUIZ / TEST INTERFACE -->
-        <section id="screen-quiz" class="hidden space-y-6">
-            <!-- Progress Bar & Stats -->
-            <div class="glass-card p-4 rounded-2xl shadow-sm flex flex-wrap justify-between items-center gap-4">
-                <div class="flex items-center gap-3">
-                    <span id="quiz-grade-title" class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-blue-200">
-                        ថ្នាក់ទី...
-                    </span>
-                    <div class="text-sm font-bold text-slate-700">
-                        សំណួរទី <span id="current-q-num">1</span>/<span id="total-q-num">5</span>
-                    </div>
-                </div>
-
-                <!-- Timer -->
-                <div class="flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-xl border border-amber-200 font-mono text-sm font-bold">
-                    <i class="fa-regular fa-clock text-amber-600"></i>
-                    <span id="timer-display">05:00</span>
-                </div>
-            </div>
-
-            <!-- Progress Bar -->
-            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                <div id="quiz-progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-            </div>
-
-            <!-- Question Card -->
-            <div class="glass-card p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
-                <div class="space-y-3">
-                    <span id="q-category" class="text-xs uppercase font-bold tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">
-                        ប្រធានបទ
-                    </span>
-                    <h3 id="question-text" class="text-lg md:text-xl font-bold text-slate-800 leading-relaxed">
-                        សំណួរនឹងបង្ហាញនៅទីនេះ...
-                    </h3>
-                </div>
-
-                <!-- Options Grid -->
-                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Dynamic Options -->
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="flex justify-between items-center pt-2">
-                <button id="btn-prev" onclick="prevQuestion()" class="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-sm transition disabled:opacity-50 disabled:cursor-not-allowed">
-                    <i class="fa-solid fa-arrow-left mr-1"></i> ថយក្រោយ
-                </button>
-                <button id="btn-next" onclick="nextQuestion()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition">
-                    បន្តទៅមុខ <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- SCREEN 3: RESULT REPORT -->
-        <section id="screen-result" class="hidden space-y-6">
-            <div class="glass-card p-8 rounded-3xl text-center shadow-lg space-y-6 max-w-2xl mx-auto border border-slate-100">
-                <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center bg-blue-50 border-4 border-blue-200 shadow-inner">
-                    <i id="result-icon" class="fa-solid fa-trophy text-4xl text-amber-500"></i>
-                </div>
-
-                <div class="space-y-2">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">លទ្ធផលតេស្តស្ទង់សមត្ថភាព</h2>
-                    <p id="result-grade-label" class="text-slate-500 text-sm">កម្រិតថ្នាក់ទី...</p>
-                </div>
-
-                <!-- Score Box -->
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">ពិន្ទុទទួលបាន</p>
-                        <p id="score-text" class="text-2xl font-bold text-blue-600">0 / 0</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 font-medium">ភាគរយ</p>
-                        <p id="percentage-text" class="text-2xl font-bold text-emerald-600">0%</p>
-                    </div>
-                    <div class="col-span-2 md:col-span-1">
-                        <p class="text-xs text-slate-400 font-medium">កម្រិតសមត្ថភាព</p>
-                        <p id="level-text" class="text-lg font-bold text-amber-600">ល្អប្រសើរ</p>
-                    </div>
-                </div>
-
-                <!-- Feedback Message -->
-                <p id="result-feedback" class="text-sm text-slate-600 bg-blue-50 p-4 rounded-xl border border-blue-100">
-                    ការវាយតម្លៃសមត្ថភាព និងការណែនាំបន្ថែម...
-                </p>
-
-                <!-- Actions -->
-                <div class="flex flex-wrap justify-center gap-3 pt-4">
-                    <button onclick="retakeQuiz()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition shadow-md">
-                        <i class="fa-solid fa-rotate-left mr-1"></i> ធ្វើតេស្តឡើងវិញ
-                    </button>
-                    <button onclick="showReviewScreen()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm transition shadow-md">
-                        <i class="fa-solid fa-magnifying-glass-chart mr-1"></i> មើលចម្លើយលម្អិត
-                    </button>
-                    <button onclick="showGradeSelection()" class="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold text-sm transition">
-                        ជ្រើសរើសថ្នាក់ផ្សេង
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREEN 4: DETAILED ANSWER REVIEW -->
-        <section id="screen-review" class="hidden space-y-6">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h2 class="text-xl md:text-2xl font-bold text-slate-800">ពិនិត្យមើលចម្លើយ និងការពន្យល់</h2>
-                    <p class="text-xs text-slate-500">ស្វែងយល់ពីចម្លើយត្រឹមត្រូវ និងវិធីសាស្ត្រដោះស្រាយសំណួរ</p>
-                </div>
-                <button onclick="showResultScreen()" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold">
-                    <i class="fa-solid fa-arrow-left"></i> ត្រឡប់ទៅលទ្ធផល
-                </button>
-            </div>
-
-            <!-- Review List Container -->
-            <div id="review-list" class="space-y-4">
-                <!-- Dynamic Review Cards -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
-        <div class="max-w-5xl mx-auto px-4 space-y-2">
-            <p>© 2026 ប្រព័ន្ធស្ទង់សមត្ថភាពគណិតវិទ្យា (Math Test Suite) - រៀបចំដោយផ្អែកលើកម្មវិធីសិក្សាក្រសួងអប់រំ</p>
-            <p class="text-slate-500">គាំទ្រការបង្ហាញរូបមន្ត Math Latex ស្វ័យប្រវត្តិ</p>
+        <div>
+          <label class="block text-sm font-medium mb-1">ជ្រើសរើសមេរៀន៖</label>
+          <select id="lessonSelect" class="w-full border rounded-lg p-2"></select>
         </div>
-    </footer>
+        <div>
+          <label class="block text-sm font-medium mb-1">ជ្រើសរើសលេខតេស្ត (១-១០០)៖</label>
+          <input type="number" id="testNo" value="1" min="1" max="100" class="w-full border rounded-lg p-2">
+        </div>
+      </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // QUESTION BANK FOR GRADES 1 TO 12
-        const mathQuestionBank = {
-            1: [
-                { id: 1, category: "ប្រមាណវិធីបូក", text: "តើ $3 + 4$ ស្មើនឹងប៉ុន្មាន?", options: ["5", "6", "7", "8"], correct: 2, explanation: "$3 + 4 = 7$ (ការបូកចំនួនពីរក្នុងរង្វង់ ១០)" },
-                { id: 2, category: "ប្រមាណវិធីដក", text: "តើ $9 - 5$ ស្មើនឹងប៉ុន្មាន?", options: ["4", "3", "5", "2"], correct: 0, explanation: "$9 - 5 = 4$" },
-                { id: 3, category: "ការប្រៀបធៀប", text: "តើចំនួនណាធំជាងគេ?", options: ["12", "8", "15", "10"], correct: 2, explanation: "$15$ គឺជាចំនួនធំជាងគេក្នុងចំណោម $12, 8, 15, 10$" },
-                { id: 4, category: "លំដាប់ចំនួន", text: "តើចំនួនបន្តបន្ទាប់គឺអ្វី? $2, 4, 6, 8, ...$", options: ["9", "10", "11", "12"], correct: 1, explanation: "លំដាប់បូកថែម $2$ រៀងរាល់ជើង ដូច្នេះ $8 + 2 = 10$" },
-                { id: 5, category: "រូបធរណីមាត្រ", text: "រូបរាងដែលមានជ្រុង $3$ ហៅថាអ្វី?", options: ["ការេ", "ត្រីកោណ", "ចតុពោណកែង", "រង្វង់"], correct: 1, explanation: "ត្រីកោណគឺជាប្លង់ដែលមានជ្រុង $3$" }
-            ],
-            2: [
-                { id: 1, category: "ប្រមាណវិធីបូក", text: "តើ $45 + 23$ ស្មើនឹងប៉ុន្មាន?", options: ["68", "65", "78", "58"], correct: 0, explanation: "$40 + 20 = 60$ និង $5 + 3 = 8$ ដូច្នេះ $60 + 8 = 68$" },
-                { id: 2, category: "ប្រមាណវិធីដក", text: "តើ $80 - 35$ ស្មើនឹងប៉ុន្មាន?", options: ["40", "45", "55", "35"], correct: 1, explanation: "$80 - 35 = 45$" },
-                { id: 3, category: "ប្រមាណវិធីគុណ", text: "តើ $5 \\times 4$ ស្មើនឹងប៉ុន្មាន?", options: ["15", "20", "25", "30"], correct: 1, explanation: "$5 \\times 4 = 20$" },
-                { id: 4, category: "ប្រមាណវិធីចែក", text: "តើ $12 \\div 3$ ស្មើនឹងប៉ុន្មាន?", options: ["3", "4", "5", "6"], correct: 1, explanation: "$12 \\div 3 = 4$ ព្រោះ $4 \\times 3 = 12$" },
-                { id: 5, category: "ប្រភាគដំបូង", text: "នំមួយត្រូវបែងចែកជា $4$ ភាគស្មើគ្នា។ មួយភាគហៅថាអ្វី?", options: ["$\frac{1}{2}$", "$\frac{1}{3}$", "$\frac{1}{4}$", "$\frac{2}{4}$"], correct: 2, explanation: "មួយភាគក្នុងចំណោមបួនភាគស្មើគ្នាគឺ $\frac{1}{4}$ (មួយភាគបួន)" }
-            ],
-            3: [
-                { id: 1, category: "ប្រមាណវិធីគុណ", text: "តើ $7 \\times 8$ ស្មើនឹងប៉ុន្មាន?", options: ["54", "56", "64", "48"], correct: 1, explanation: "$7 \\times 8 = 56$" },
-                { id: 2, category: "ប្រមាណវិធីចែក", text: "តើ $63 \\div 9$ ស្មើនឹងប៉ុន្មាន?", options: ["6", "7", "8", "9"], correct: 1, explanation: "$63 \\div 9 = 7$" },
-                { id: 3, category: "ប្រភាគ", text: "គណនា $\\frac{2}{5} + \\frac{1}{5}$", options: ["$\\frac{3}{10}$", "$\\frac{3}{5}$", "$\\frac{1}{5}$", "$\\frac{4}{5}$"], correct: 1, explanation: "ភាគបែងដូចគ្នា យកភាគយកបូកភាគយក៖ $\\frac{2+1}{5} = \\frac{3}{5}$" },
-                { id: 4, category: "រង្វាស់ប្រវែង", text: "$1$ ម៉ែត្រ ($1m$) ស្មើនឹងប៉ុន្មានសង់ទីម៉ែត្រ ($cm$)?", options: ["10 cm", "100 cm", "1000 cm", "50 cm"], correct: 1, explanation: "$1m = 100cm$" },
-                { id: 5, category: "បរិមាត្រ", text: "ការេមួយមានជ្រុងប្រវែង $6cm$។ តើបរិមាត្រការេនោះស្មើនឹងប៉ុន្មាន?", options: ["12 cm", "24 cm", "36 cm", "18 cm"], correct: 1, explanation: "បរិមាត្រការេ $= 4 \\times \\text{ជ្រុង} = 4 \\times 6 = 24cm$" }
-            ],
-            4: [
-                { id: 1, category: "ចរន្តចំនួន", text: "រកតម្លៃនៃ $x$: $3 \\times x = 45$", options: ["12", "15", "18", "150"], correct: 1, explanation: "$x = 45 \\div 3 = 15$" },
-                { id: 2, category: "ប្រភាគ", text: "សម្រួលប្រភាគ $\\frac{8}{12}$ ឱ្យទៅជាប្រភាគសម្រួលរួច៖", options: ["$\\frac{4}{6}$", "$\\frac{2}{3}$", "$\\frac{1}{3}$", "$\\frac{3}{4}$"], correct: 1, explanation: "ចែកភាគយក និងភាគបែងនឹង $4$៖ $\\frac{8\\div 4}{12\\div 4} = \\frac{2}{3}$" },
-                { id: 3, category: "ចំនួនទសភាគ", text: "គណនា $3.5 + 2.75$", options: ["6.25", "5.25", "6.15", "5.75"], correct: 0, explanation: "$3.50 + 2.75 = 6.25$" },
-                { id: 4, category: "ផ្ទៃក្រឡា", text: "ចតុពោណកែងមួយមានបណ្តោយ $8cm$ និងទទឹង $5cm$។ តើផ្ទៃក្រឡាស្មើប៉ុន្មាន?", options: ["26 cm²", "40 cm²", "35 cm²", "13 cm²"], correct: 1, explanation: "ផ្ទៃក្រឡា $= \\text{បណ្តោយ} \\times \\text{ទទឹង} = 8 \\times 5 = 40cm^2$" },
-                { id: 5, category: "មុំ", text: "មុំដែលតូចជាង $90^\\circ$ ហៅថាមុំអ្វី?", options: ["មុំកែង", "មុំស្រួច", "មុំទាល", "មុំរាប"], correct: 1, explanation: "មុំដែលមានរង្វាស់តូចជាង $90^\\circ$ ហៅថាមុំស្រួច (Acute Angle)" }
-            ],
-            5: [
-                { id: 1, category: "ភាគរយ", text: "តើ $20\\%$ នៃ $150$ ស្មើនឹងប៉ុន្មាន?", options: ["20", "25", "30", "35"], correct: 2, explanation: "$\\frac{20}{100} \\times 150 = 30$" },
-                { id: 2, category: "មធ្យមភាគ", text: "រកមធ្យមភាគនៃចំនួន $10, 20, 30, 40, 50$៖", options: ["25", "30", "35", "20"], correct: 1, explanation: "មធ្យមភាគ $= \\frac{10+20+30+40+50}{5} = \\frac{150}{5} = 30$" },
-                { id: 3, category: "ប្រមាណវិធីប្រភាគ", text: "គណនា $\\frac{3}{4} \\times \\frac{2}{3}$", options: ["$\\frac{1}{2}$", "$\\frac{5}{7}$", "$\\frac{6}{7}$", "$\\frac{1}{4}$"], correct: 0, explanation: "$\\frac{3 \\times 2}{4 \\times 3} = \\frac{6}{12} = \\frac{1}{2}$" },
-                { id: 4, category: "មាឌធរណីមាត្រ", text: "គូបមួយមានជ្រុងប្រវែង $3cm$។ តើមាឌគូបនោះស្មើប៉ុន្មាន?", options: ["9 cm³", "18 cm³", "27 cm³", "36 cm³"], correct: 2, explanation: "មាឌគូប $= a^3 = 3^3 = 27cm^3$" },
-                { id: 5, category: "មុំក្នុងត្រីកោណ", text: "តើនព្វផលសរុបនៃមុំក្នុងត្រីកោណស្មើនឹងប៉ុន្មានដឺក្រេ?", options: ["90°", "180°", "270°", "360°"], correct: 1, explanation: "ផលបូករង្វាស់មុំក្នុងនៃត្រីកោណជានិច្ចកាលស្មើ $180^\\circ$" }
-            ],
-            6: [
-                { id: 1, category: "តួចែករួមធំបំផុត", text: "រកតួចែករួមធំបំផុត (GCD/PGCD) នៃ $12$ និង $18$៖", options: ["3", "6", "9", "36"], correct: 1, explanation: "តួចែកនៃ $12$: {1,2,3,4,6,12}, តួចែកនៃ $18$: {1,2,3,6,9,18} -> PGCD គឺ $6$" },
-                { id: 2, category: "ពហុគុណរួមតូចបំផុត", text: "រកពហុគុណរួមតូចបំផុត (LCM/PPCM) នៃ $4$ និង $6$៖", options: ["12", "24", "18", "8"], correct: 0, explanation: "ពហុគុណ $4$: {4,8,12,16...}, $6$: {6,12,18...} -> PPCM គឺ $12$" },
-                { id: 3, category: "សមាមាត្រ", text: "បើ $2$ គីឡូក្រាមតម្លៃ $10$ ដុល្លារ តើ $5$ គីឡូក្រាមតម្លៃប៉ុន្មាន?", options: ["20", "22", "25", "30"], correct: 2, explanation: "តម្លៃ $1kg = 5$ ដុល្លារ, ដូច្នេះ $5kg = 5 \\times 5 = 25$ ដុល្លារ" },
-                { id: 4, category: "ល្បឿន", text: "ឡានមួយបើកបរបានចម្ងាយ $120km$ ក្នុងរយៈពេល $2$ ម៉ោង។ តើល្បឿនមធ្យមស្មើប៉ុន្មាន?", options: ["50 km/h", "60 km/h", "70 km/h", "80 km/h"], correct: 1, explanation: "$v = \\frac{s}{t} = \\frac{120}{2} = 60km/h$" },
-                { id: 5, category: "សមីការសាមញ្ញ", text: "ដោះស្រាយសមីការ $2x + 5 = 15$៖", options: ["x = 5", "x = 10", "x = 4", "x = 6"], correct: 0, explanation: "$2x = 15 - 5 \\Rightarrow 2x = 10 \\Rightarrow x = 5$" }
-            ],
-            7: [
-                { id: 1, category: "ចំនួនគត់រឺឡាទីវ", text: "គណនា $(-5) + (-8) - (-3)$", options: ["-10", "-16", "-10", "-10"], correct: 0, explanation: "$(-5) - 8 + 3 = -13 + 3 = -10$" },
-                { id: 2, category: "កន្សោមពីជគណិត", text: "ពង្រៀកកន្សោម $3(2x - 4) + 5x$", options: ["11x - 12", "11x - 4", "6x - 12", "11x + 12"], correct: 0, explanation: "$6x - 12 + 5x = 11x - 12$" },
-                { id: 3, category: "វិសមីការ", text: "ដោះស្រាយវិសមីការ $3x > 12$", options: ["x > 4", "x < 4", "x > 36", "x = 4"], correct: 0, explanation: "$x > \\frac{12}{3} \\Rightarrow x > 4$" },
-                { id: 4, category: "ទ្រឹស្តីបទពីតាក័រ", text: "ត្រីកោណកែងមួយមានជ្រុងកែង $3cm$ និង $4cm$។ តើជ្រុងអ៊ីប៉ូតែនុសស្មើប៉ុន្មាន?", options: ["5 cm", "6 cm", "7 cm", "25 cm"], correct: 0, explanation: "$c = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5cm$" },
-                { id: 5, category: "កូអរដោនេ", text: "ចំណុច $A(3, -2)$ ស្ថិតនៅក្នុងក្វាដ្រង់ទីប៉ុន្មាន?", options: ["ក្វាដ្រង់ទី ១", "ក្វាដ្រង់ទី ២", "ក្វាដ្រង់ទី ៣", "ក្វាដ្រង់ទី ៤"], correct: 3, explanation: "$x > 0, y < 0$ ស្ថិតក្នុងក្វាដ្រង់ទី ៤ (Quadrant IV)" }
-            ],
-            8: [
-                { id: 1, category: "ស្វ័យគុណ", text: "សម្រួលកន្សោម $\\frac{a^5 \\times a^3}{a^2}$", options: ["$a^6$", "$a^10$", "$a^4$", "$a^8$"], correct: 0, explanation: "$a^{5+3-2} = a^6$" },
-                { id: 2, category: "សមភាពសំគាល់", text: "ពង្រៀក $(x + 3)^2$", options: ["$x^2 + 9$", "$x^2 + 6x + 9$", "$x^2 + 3x + 9$", "$x^2 + 6x + 6$"], correct: 1, explanation: "$(a+b)^2 = a^2 + 2ab + b^2 \\Rightarrow x^2 + 6x + 9$" },
-                { id: 3, category: "ប្រព័ន្ធសមីការ", text: "រកតម្លៃ $y$ នៃប្រព័ន្ធសមីការ $\\begin{cases} x + y = 10 \\\\ x - y = 2 \\end{cases}$", options: ["y = 4", "y = 6", "y = 8", "y = 2"], correct: 0, explanation: "ដកសមីការទី២ ពីទី១៖ $2y = 8 \\Rightarrow y = 4$" },
-                { id: 4, category: "អនុគមន៍លីនេអ៊ែរ", text: "រកមេគុណប្រាប់ទិសនៃបណ្តាត់ $y = -3x + 7$", options: ["7", "-3", "3", "-7"], correct: 1, explanation: "ក្នុងទម្រង់ $y = ax + b$ មេគុណប្រាប់ទិសគឺ $a = -3$" },
-                { id: 5, category: "ធរណីមាត្រ", text: "ផលបូករង្វាស់មុំក្នុងនៃពហុកោណមានជ្រុង $n=6$ (ឆកោណ) គឺ៖", options: ["540°", "720°", "360°", "900°"], correct: 1, explanation: "S = $(n-2) \\times 180^\\circ = (6-2) \\times 180^\\circ = 4 \\times 180^\\circ = 720^\\circ$" }
-            ],
-            9: [
-                { id: 1, category: "រ៉ាឌីកាល់", text: "សម្រួលកន្សោម $\\sqrt{50} + \\sqrt{18}$", options: ["$\\sqrt{68}$", "$8\\sqrt{2}$", "$5\\sqrt{2}$", "$15$"], correct: 1, explanation: "$\\sqrt{25 \\times 2} + \\sqrt{9 \\times 2} = 5\\sqrt{2} + 3\\sqrt{2} = 8\\sqrt{2}$" },
-                { id: 2, category: "សមីការដឺក្រេទី២", text: "រកឫសនៃសមីការ $x^2 - 5x + 6 = 0$", options: ["x = 1, 6", "x = 2, 3", "x = -2, -3", "x = -1, 5"], correct: 1, explanation: "$(x-2)(x-3) = 0 \\Rightarrow x = 2$ ឬ $x = 3$" },
-                { id: 3, category: "ត្រីកោណមាត្រ", text: "បើត្រីកោណកែងមាន $\\sin \\theta = \\frac{3}{5}$ តើ $\\cos \\theta$ ស្មើប៉ុន្មាន? (មុំស្រួច)", options: ["$\\frac{4}{5}$", "$\\frac{3}{4}$", "$\\frac{5}{3}$", "$\\frac{1}{2}$"], correct: 0, explanation: "$\\cos^2 \\theta = 1 - \\sin^2 \\theta = 1 - \\frac{9}{25} = \\frac{16}{25} \\Rightarrow \\cos \\theta = \\frac{4}{5}$" },
-                { id: 4, category: "ផលធៀបធរណីមាត្រ", text: "ទ្រឹស្តីបទតាលែស (Thales) ប្រើប្រាស់សម្រាប់ប្រៀបធៀបអ្វី?", options: ["មុំ", "ផលធៀបប្រវែងអង្កត់តាំងពីបន្ទាត់ស្រប", "ផ្ទៃក្រឡា", "មាឌ"], correct: 1, explanation: "ទ្រឹស្តីបទតាលែសប្រើប្រាស់លើផលធៀបប្រវែងអង្កត់តាំងពីបន្ទាត់ស្រប" },
-                { id: 5, category: "ប្រូបាប៊ីលីតេ", text: "បោះគ្រាប់ឡុកឡាក់មួយគ្រាប់។ តើប្រូបាប៊ីលីតេដែលចេញលេខគូស្មើប៉ុន្មាន?", options: ["$\\frac{1}{6}$", "$\\frac{1}{2}$", "$\\frac{1}{3}$", "$\\frac{2}{3}$"], correct: 1, explanation: "លេខគូមាន {2,4,6} មាន 3 ករណីស្រប លើករណីអាច 6 គឺ $\\frac{3}{6} = \\frac{1}{2}$" }
-            ],
-            10: [
-                { id: 1, category: "វ៉ិចទ័រ", text: "ប្រមាណវិធីវ៉ិចទ័រ $\\vec{u}(2, 3)$ និង $\\vec{v}(-1, 4)$។ រកកូអរដោនេនៃ $\\vec{u} + \\vec{v}$", options: ["(1, 7)", "(3, -1)", "(-2, 12)", "(1, 1)"], correct: 0, explanation: "$\\vec{u} + \\vec{v} = (2 + (-1), 3 + 4) = (1, 7)$" },
-                { id: 2, category: "ពហុធា", text: "សំណល់នៃវិធីចែកពហុធា $P(x) = x^3 - 2x + 4$ នឹង $x - 1$ គឺ៖", options: ["3", "1", "5", "0"], correct: 0, explanation: "តាមទ្រឹស្តីបទសំណល់ $R = P(1) = 1^3 - 2(1) + 4 = 3$" },
-                { id: 3, category: "អនុគមន៍ដឺក្រេទី២", text: "កំពូលនៃប៉ារ៉ាបូល $y = (x - 2)^2 + 3$ គឺចំណុចណា?", options: ["(-2, 3)", "(2, 3)", "(2, -3)", "(-2, -3)"], correct: 1, explanation: "ទម្រង់ស្តង់ដារ $y = a(x-h)^2 + k$ មានកំពូល $(h,k) = (2, 3)$" },
-                { id: 4, category: "ត្រីកោណមាត្រ", text: "គណនាតម្លៃនៃ $\\sin(90^\\circ) + \\cos(0^\\circ)$", options: ["0", "1", "2", "0.5"], correct: 2, explanation: "$\\sin(90^\\circ) = 1$ និង $\\cos(0^\\circ) = 1 \\Rightarrow 1 + 1 = 2$" },
-                { id: 5, category: "ស្វ័យគុណនិងលោការីត", text: "គណនា $2^x = 16$", options: ["x = 3", "x = 4", "x = 8", "x = 5"], correct: 1, explanation: "$2^x = 2^4 \\Rightarrow x = 4$" }
-            ],
-            11: [
-                { id: 1, category: "លីមីត", text: "គណនាលីមីត $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$", options: ["0", "2", "4", "មិនកំណត់"], correct: 2, explanation: "$\\lim_{x \\to 2} \\frac{(x-2)(x+2)}{x-2} = \\lim_{x \\to 2} (x+2) = 4$" },
-                { id: 2, category: "ដេរីវេ", text: "រកដេរីវេនៃអនុគមន៍ $f(x) = 3x^4 - 5x^2 + 7$", options: ["$12x^3 - 10x$", "$7x^3 - 10x$", "$12x^3 - 5$", "$3x^3 - 10x$"], correct: 0, explanation: "$f'(x) = 3(4x^3) - 5(2x) + 0 = 12x^3 - 10x$" },
-                { id: 3, category: "ស្វីតចំនួន", text: "ស្វីតនព្វន្តមាន $u_1 = 3$ និងផលសងរួម $d = 4$។ រកតួ $u_5$៖", options: ["19", "23", "15", "17"], correct: 0, explanation: "$u_n = u_1 + (n-1)d \\Rightarrow u_5 = 3 + 4(4) = 19$" },
-                { id: 4, category: "ស្វីតធរណីមាត្រ", text: "ស្វីតធរណីមាត្រមាន $v_1 = 2$ និងផលធៀបរួម $q = 3$។ រក $v_4$៖", options: ["54", "24", "18", "162"], correct: 0, explanation: "$v_n = v_1 \\cdot q^{n-1} \\Rightarrow v_4 = 2 \\cdot 3^3 = 2 \\cdot 27 = 54$" },
-                { id: 5, category: "លោការីត", text: "គណនា $\\log_2(32)$", options: ["4", "5", "6", "16"], correct: 1, explanation: "$\\log_2(2^5) = 5$" }
-            ],
-            12: [
-                { id: 1, category: "ចំនួនកុំផ្លិច", text: "រកម៉ូឌុលនៃចំនួនកុំផ្លិច $z = 3 + 4i$", options: ["5", "7", "25", "1"], correct: 0, explanation: "$|z| = \\sqrt{a^2 + b^2} = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$" },
-                { id: 2, category: "អាំងតេក្រាល", text: "គណនាអាំងតេក្រាលមិនកំណត់ $\\int (3x^2 + 2x) \, dx$", options: ["$x^3 + x^2 + C$", "$6x + 2 + C$", "$x^3 + 2x^2 + C$", "$\\frac{x^3}{3} + C$"], correct: 0, explanation: "$\\int 3x^2 dx + \\int 2x dx = x^3 + x^2 + C$" },
-                { id: 3, category: "សមីការឌីផេរ៉ង់ស្យែល", text: "ឫសទូទៅនៃសមីការឌីផេរ៉ង់ស្យែល $y' - 2y = 0$ គឺ៖", options: ["$y = Ce^{2x}$", "$y = Ce^{-2x}$", "$y = 2x + C$", "$y = C\\ln(2x)$"], correct: 0, explanation: "ទម្រង់ $y' - ay = 0 \\Rightarrow y = Ce^{ax} = Ce^{2x}$" },
-                { id: 4, category: "ប្រូបាប៊ីលីតេ (បន្សំ)", text: "គណនាតម្លៃនៃ $C(5, 2)$ ឬ $C_5^2$", options: ["10", "20", "60", "120"], correct: 0, explanation: "$C(5,2) = \\frac{5!}{2!(5-2)!} = \\frac{20}{2} = 10$" },
-                { id: 5, category: "ធរណីមាត្រក្នុងលំហ", text: "ផលគុណស្កាឡែនៃពីរវ៉ិចទ័រអកតូកូណាល់គ្នា (កែងគ្នា) ស្មើនឹងប៉ុន្មាន?", options: ["0", "1", "-1", "មិនកំណត់"], correct: 0, explanation: "បើ $\\vec{u} \\perp \\vec{v} \\Rightarrow \\vec{u} \\cdot \\vec{v} = 0$" }
-            ]
-        };
+      <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition">
+        ចាប់ផ្តើមធ្វើតេស្ត (១០០ សំណួរ / ៣០នាទី)
+      </button>
+    </div>
 
-        // APP STATE
-        let currentGrade = null;
-        let currentQuestions = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = []; // Store selected option indices
-        let timerInterval = null;
-        let timeRemaining = 300; // 5 minutes in seconds
+    <!-- Quiz Area -->
+    <div id="quizContainer" class="hidden bg-white rounded-xl shadow-md p-6">
+      <!-- Quiz Header -->
+      <div class="flex justify-between items-center border-b pb-4 mb-4">
+        <div>
+          <span id="quizTitle" class="font-bold text-lg text-indigo-600"></span>
+          <p class="text-sm text-gray-500">សំណួរទី <span id="currentQNum">1</span> / 100</p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-gray-500 block">ពេលនៅសល់</span>
+          <span id="timer" class="text-xl font-bold text-red-500">30:00</span>
+        </div>
+      </div>
 
-        // ON LOAD INITIALIZATION
-        window.onload = function() {
-            renderGradeGrid('all');
-            renderMathKaTeX();
-        };
+      <!-- Question Content -->
+      <div class="mb-6">
+        <h2 id="questionText" class="text-lg font-medium mb-4"></h2>
+        <div id="optionsContainer" class="space-y-3"></div>
+      </div>
 
-        // Render Grade Cards
-        function renderGradeGrid(filter = 'all') {
-            const grid = document.getElementById('grade-grid');
-            grid.innerHTML = '';
+      <!-- Navigation Buttons -->
+      <div class="flex justify-between pt-4 border-t">
+        <button onclick="prevQuestion()" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">ត្រឡប់ក្រោយ</button>
+        <button onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">បន្ទាប់</button>
+      </div>
+    </div>
+  </div>
 
-            const gradesInfo = [
-                { g: 1, title: "ថ្នាក់ទី ១", cat: "primary", desc: "លេខ និងប្រមាណវិធីដំបូង", color: "from-emerald-500 to-teal-600" },
-                { g: 2, title: "ថ្នាក់ទី ២", cat: "primary", desc: "ប្រមាណវិធីបូក ដក គុណ ចែក", color: "from-emerald-500 to-teal-600" },
-                { g: 3, title: "ថ្នាក់ទី ៣", cat: "primary", desc: "ប្រភាគ និងរង្វាស់រង្វាល់", color: "from-emerald-500 to-teal-600" },
-                { g: 4, title: "ថ្នាក់ទី ៤", cat: "primary", desc: "ទសភាគ និងធរណីមាត្រ", color: "from-emerald-500 to-teal-600" },
-                { g: 5, title: "ថ្នាក់ទី ៥", cat: "primary", desc: "ភាគរយ មធ្យមភាគ មាឌ", color: "from-emerald-500 to-teal-600" },
-                { g: 6, title: "ថ្នាក់ទី ៦", cat: "primary", desc: "សមាមាត្រ PGCD PPCM", color: "from-emerald-500 to-teal-600" },
-                { g: 7, title: "ថ្នាក់ទី ៧", cat: "secondary", desc: "ពីជគណិត និងទ្រឹស្តីបទពីតាក័រ", color: "from-blue-500 to-indigo-600" },
-                { g: 8, title: "ថ្នាក់ទី ៨", cat: "secondary", desc: "ស្វ័យគុណ សមីការ និងពហុកោណ", color: "from-blue-500 to-indigo-600" },
-                { g: 9, title: "ថ្នាក់ទី ៩", cat: "secondary", desc: "រ៉ាឌីកាល់ និងត្រីកោណមាត្រ", color: "from-blue-500 to-indigo-600" },
-                { g: 10, title: "ថ្នាក់ទី ១០", cat: "high", desc: "វ៉ិចទ័រ និងប៉ារ៉ាបូល", color: "from-purple-500 to-violet-600" },
-                { g: 11, title: "ថ្នាក់ទី ១១", cat: "high", desc: "លីមីត ដេរីវេ និងស្វីត", color: "from-purple-500 to-violet-600" },
-                { g: 12, title: "ថ្នាក់ទី ១២", cat: "high", desc: "កុំផ្លិច អាំងតេក្រាល និងប្រូបាប", color: "from-purple-500 to-violet-600" }
-            ];
+  <script>
+    // ទិន្នន័យមេរៀនតាមថ្នាក់
+    const curriculumData = {
+      12: [
+        { id: 'g12_cplx', name: 'ចំនួនកុំផ្លិច' },
+        { id: 'g12_lim', name: 'លីមីតនៃអនុគមន៍' },
+        { id: 'g12_integ', name: 'អាំងតេក្រាល' }
+      ],
+      11: [
+        { id: 'g11_trig', name: 'ត្រីកោណមាត្រ' }
+      ]
+    };
 
-            const filtered = gradesInfo.filter(item => filter === 'all' || item.cat === filter);
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let userAnswers = {};
+    let timerInterval = null;
 
-            filtered.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "glass-card rounded-2xl p-5 hover:shadow-xl transition-all cursor-pointer border border-slate-200/80 group flex flex-col justify-between";
-                card.onclick = () => startQuiz(item.g);
+    // Load Lessons dropdown
+    function loadLessons() {
+      const grade = document.getElementById('gradeSelect').value;
+      const lessonSelect = document.getElementById('lessonSelect');
+      lessonSelect.innerHTML = '';
+      curriculumData[grade].forEach(lesson => {
+        lessonSelect.innerHTML += `<option value="${lesson.id}">${lesson.name}</option>`;
+      });
+    }
 
-                card.innerHTML = `
-                    <div class="space-y-3">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                            ${item.g}
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors">${item.title}</h3>
-                            <p class="text-xs text-slate-500 mt-1">${item.desc}</p>
-                        </div>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600">
-                        <span>ចាប់ផ្តើមធ្វើតេស្ត</span>
-                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+    // Dynamic Math Question Generator (បង្កើត ១០០ សំណួរស្វ័យប្រវត្តិ)
+    function generateQuestions(lessonId, testNo) {
+      const questions = [];
+      const seed = testNo * 100; // ដកស្រង់ក្បួនលេខតាមលេខតេស្ត
+
+      for (let i = 1; i <= 100; i++) {
+        let a = (i + seed) % 10 + 1;
+        let b = (i * 2 + seed) % 10 + 1;
+        
+        if (lessonId === 'g12_cplx') {
+          // គំរូសំណួរចំនួនកុំផ្លិច
+          let ans = Math.sqrt(a*a + b*b).toFixed(2);
+          questions.push({
+            id: i,
+            text: `រកម៉ូឌុលនៃចំនួនកុំផ្លិច $z = ${a} + ${b}i$`,
+            options: [`${ans}`, `${a + b}`, `${a * b}`, `${(a*a + b*b)}`],
+            correct: 0,
+            explanation: `|z| = \\sqrt{${a}^2 + ${b}^2} = ${ans}`
+          });
+        } else {
+          // គំរូសំណួរបូកលេខទូទៅ
+          questions.push({
+            id: i,
+            text: `គណនាតម្លៃនៃ $x = ${a} + ${b}$`,
+            options: [`${a + b}`, `${a - b}`, `${a * b}`, `${a + b + 1}`],
+            correct: 0,
+            explanation: `${a} + ${b} = ${a + b}`
+          });
         }
+      }
+      return questions;
+    }
 
-        // Filter Grade Tabs
-        function filterGrades(type) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.className = "tab-btn px-4 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100";
-            });
-            const activeTab = document.getElementById(`tab-${type}`);
-            if(activeTab) {
-                activeTab.className = "tab-btn px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white shadow";
-            }
-            renderGradeGrid(type);
+    // ចាប់ផ្តើមធ្វើតេស្ត
+    function startQuiz() {
+      const lessonId = document.getElementById('lessonSelect').value;
+      const testNo = parseInt(document.getElementById('testNo').value);
+      
+      currentQuestions = generateQuestions(lessonId, testNo);
+      currentIndex = 0;
+      userAnswers = {};
+
+      document.getElementById('quizContainer').classList.remove('hidden');
+      document.getElementById('quizTitle').innerText = `តេស្តទី ${testNo} (១០០ សំណួរ)`;
+      
+      startTimer(30 * 60); // ៣០ នាទី
+      renderQuestion();
+    }
+
+    // បង្ហាញសំណួរតាម Index
+    function renderQuestion() {
+      const q = currentQuestions[currentIndex];
+      document.getElementById('currentQNum').innerText = currentIndex + 1;
+      document.getElementById('questionText').innerHTML = q.text;
+
+      const optsContainer = document.getElementById('optionsContainer');
+      optsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[currentIndex] === idx;
+        optsContainer.innerHTML += `
+          <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-slate-50 ${isSelected ? 'border-indigo-600 bg-indigo-50' : ''}">
+            <input type="radio" name="option" class="hidden" onclick="selectAnswer(${idx})" ${isSelected ? 'checked' : ''}>
+            <span class="w-7 h-7 rounded-full border flex items-center justify-center mr-3 font-semibold text-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-gray-100'}">
+              ${String.fromCharCode(65 + idx)}
+            </span>
+            <span>${opt}</span>
+          </label>
+        `;
+      });
+
+      // Render KaTeX Formulas
+      if (window.renderMathInElement) {
+        renderMathInElement(document.getElementById('quizContainer'));
+      }
+    }
+
+    function selectAnswer(idx) {
+      userAnswers[currentIndex] = idx;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    // នាឡិការ៉ាប់ថយក្រោយ ៣០ នាទី
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      let timeRemaining = seconds;
+      
+      timerInterval = setInterval(() => {
+        const min = Math.floor(timeRemaining / 60);
+        const sec = timeRemaining % 60;
+        document.getElementById('timer').innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        
+        if (timeRemaining <= 0) {
+          clearInterval(timerInterval);
+          alert('អស់ချိန်ធ្វើតេស្តហើយ!');
         }
+        timeRemaining--;
+      }, 1000);
+    }
 
-        // Start Quiz
-        function startQuiz(gradeNum) {
-            currentGrade = gradeNum;
-            currentQuestions = mathQuestionBank[gradeNum] || [];
-            currentQuestionIndex = 0;
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            timeRemaining = 300; // 5 mins
-
-            if(currentQuestions.length === 0) {
-                alert("មិនទាន់មានសំណួរសម្រាប់ថ្នាក់នេះនៅឡើយទេ!");
-                return;
-            }
-
-            // UI Switch
-            document.getElementById('screen-grade-select').classList.add('hidden');
-            document.getElementById('screen-result').classList.add('hidden');
-            document.getElementById('screen-review').classList.add('hidden');
-            document.getElementById('screen-quiz').classList.remove('hidden');
-
-            document.getElementById('quiz-grade-title').innerText = `ថ្នាក់ទី ${gradeNum}`;
-            document.getElementById('total-q-num').innerText = currentQuestions.length;
-
-            startTimer();
-            loadQuestion();
-        }
-
-        // Timer Function
-        function startTimer() {
-            clearInterval(timerInterval);
-            updateTimerDisplay();
-            timerInterval = setInterval(() => {
-                timeRemaining--;
-                updateTimerDisplay();
-                if(timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    finishQuiz();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(timeRemaining / 60);
-            const secs = timeRemaining % 60;
-            document.getElementById('timer-display').innerText = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        // Load Single Question
-        function loadQuestion() {
-            const q = currentQuestions[currentQuestionIndex];
-            document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
-            document.getElementById('q-category').innerText = q.category;
-            document.getElementById('question-text').innerText = q.text;
-
-            // Update Progress Bar
-            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
-            document.getElementById('quiz-progress-bar').style.width = `${progress}%`;
-
-            // Render Options
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-
-            q.options.forEach((optText, idx) => {
-                const isSelected = userAnswers[currentQuestionIndex] === idx;
-                const optCard = document.createElement('div');
-                optCard.className = `option-card p-4 rounded-2xl border-2 cursor-pointer flex items-center justify-between ${
-                    isSelected 
-                    ? 'border-blue-600 bg-blue-50/80 shadow-sm' 
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`;
-                optCard.onclick = () => selectOption(idx);
-
-                optCard.innerHTML = `
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <span class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm ${
-                            isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
-                        }">
-                            ${String.fromCharCode(65 + idx)}
-                        </span>
-                        <span class="text-sm md:text-base font-medium text-slate-700">${optCardTextSanitize(optText)}</span>
-                    </div>
-                    ${isSelected ? '<i class="fa-solid fa-circle-check text-blue-600 text-lg"></i>' : ''}
-                `;
-                container.appendChild(optCard);
-            });
-
-            // Navigation Button States
-            document.getElementById('btn-prev').disabled = currentQuestionIndex === 0;
-            
-            const btnNext = document.getElementById('btn-next');
-            if(currentQuestionIndex === currentQuestions.length - 1) {
-                btnNext.innerHTML = 'បញ្ចប់ការតេស្ត <i class="fa-solid fa-check ml-1"></i>';
-                btnNext.className = "px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition";
-            } else {
-                btnNext.innerHTML = 'បន្តទៅមុខ <i class="fa-solid fa-arrow-right ml-1"></i>';
-                btnNext.className = "px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition";
-            }
-
-            renderMathKaTeX();
-        }
-
-        function optCardTextSanitize(str) {
-            return str;
-        }
-
-        // Option Selection
-        function selectOption(index) {
-            userAnswers[currentQuestionIndex] = index;
-            loadQuestion();
-        }
-
-        // Navigation
-        function nextQuestion() {
-            if(currentQuestionIndex < currentQuestions.length - 1) {
-                currentQuestionIndex++;
-                loadQuestion();
-            } else {
-                finishQuiz();
-            }
-        }
-
-        function prevQuestion() {
-            if(currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                loadQuestion();
-            }
-        }
-
-        // Finish & Calculate Score
-        function finishQuiz() {
-            clearInterval(timerInterval);
-
-            let score = 0;
-            currentQuestions.forEach((q, idx) => {
-                if(userAnswers[idx] === q.correct) {
-                    score++;
-                }
-            });
-
-            const total = currentQuestions.length;
-            const percentage = Math.round((score / total) * 100);
-
-            // Display Results
-            document.getElementById('screen-quiz').classList.add('hidden');
-            document.getElementById('screen-result').classList.remove('hidden');
-
-            document.getElementById('result-grade-label').innerText = `ស្ទង់សមត្ថភាព ថ្នាក់ទី ${currentGrade}`;
-            document.getElementById('score-text').innerText = `${score} / ${total}`;
-            document.getElementById('percentage-text').innerText = `${percentage}%`;
-
-            // Evaluation Feedback
-            const feedbackEl = document.getElementById('result-feedback');
-            const levelEl = document.getElementById('level-text');
-            const iconEl = document.getElementById('result-icon');
-
-            if(percentage >= 80) {
-                levelEl.innerText = "ល្អប្រសើរ (Excellent)";
-                levelEl.className = "text-lg font-bold text-emerald-600";
-                iconEl.className = "fa-solid fa-trophy text-4xl text-amber-500";
-                feedbackEl.innerText = "អបអរសាទរ! អ្នកមានសមត្ថភាពគណិតវិទ្យារឹងមាំខ្លាំងក្នុងកម្រិតថ្នាក់នេះ។ សូមបន្តរក្សានិងអភិវឌ្ឍសមត្ថភាពបន្ថែមទៀត!";
-            } else if(percentage >= 50) {
-                levelEl.innerText = "មធ្យម (Good)";
-                levelEl.className = "text-lg font-bold text-blue-600";
-                iconEl.className = "fa-solid fa-medal text-4xl text-blue-500";
-                feedbackEl.innerText = "លទ្ធផលល្អបង្គួរ! អ្នកយល់ដឹងពីមេរៀនគ្រឹះបានច្រើន ប៉ុន្តែនៅមានចំណុចខ្លះដែលត្រូវរំលឹក និងខិតខំពង្រឹងបន្ថែម។";
-            } else {
-                levelEl.innerText = "ត្រូវខិតខំ បន្ថែម (Needs Improvement)";
-                levelEl.className = "text-lg font-bold text-amber-600";
-                iconEl.className = "fa-solid fa-book-open text-4xl text-amber-500";
-                feedbackEl.innerText = "កុំបាក់ទឹកចិត្ត! សូមពិនិត្យមើលចម្លើយលម្អិត និងរំលឹកមេរៀនឡើងវិញដើម្បីពង្រឹងសមត្ថភាពឱ្យកាន់តែប្រសើរ។";
-            }
-        }
-
-        // Retake Quiz
-        function retakeQuiz() {
-            startQuiz(currentGrade);
-        }
-
-        function showGradeSelection() {
-            clearInterval(timerInterval);
-            document.getElementById('screen-quiz').classList.add('hidden');
-            document.getElementById('screen-result').classList.add('hidden');
-            document.getElementById('screen-review').classList.add('hidden');
-            document.getElementById('screen-grade-select').classList.remove('hidden');
-        }
-
-        function showResultScreen() {
-            document.getElementById('screen-review').classList.add('hidden');
-            document.getElementById('screen-result').classList.remove('hidden');
-        }
-
-        // Review Screen
-        function showReviewScreen() {
-            document.getElementById('screen-result').classList.add('hidden');
-            document.getElementById('screen-review').classList.remove('hidden');
-
-            const container = document.getElementById('review-list');
-            container.innerHTML = '';
-
-            currentQuestions.forEach((q, idx) => {
-                const userAns = userAnswers[idx];
-                const isCorrect = userAns === q.correct;
-
-                const card = document.createElement('div');
-                card.className = `glass-card p-5 rounded-2xl border-l-4 ${
-                    isCorrect ? 'border-l-emerald-500' : 'border-l-red-500'
-                } space-y-3`;
-
-                card.innerHTML = `
-                    <div class="flex items-start justify-between gap-2">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md ${
-                            isCorrect ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
-                        }">
-                            សំណួរទី ${idx + 1} • ${isCorrect ? 'ត្រឹមត្រូវ' : 'មិនត្រឹមត្រូវ/មិនបានឆ្លើយ'}
-                        </span>
-                        <span class="text-xs text-slate-400 font-medium">${q.category}</span>
-                    </div>
-
-                    <h4 class="font-bold text-slate-800 text-base">${q.text}</h4>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm pt-2">
-                        <div class="p-3 rounded-xl ${userAns === q.correct ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}">
-                            <span class="font-semibold block text-xs opacity-75">ចម្លើយរបស់អ្នក៖</span>
-                            ${userAns !== null ? q.options[userAns] : '<i>មិនបានជ្រើសរើស</i>'}
-                        </div>
-                        <div class="p-3 rounded-xl bg-blue-50 text-blue-800 border border-blue-200">
-                            <span class="font-semibold block text-xs opacity-75">ចម្លើយត្រឹមត្រូវ៖</span>
-                            ${q.options[q.correct]}
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-600 mt-2">
-                        <strong class="text-slate-800"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> ការពន្យល់៖</strong> 
-                        ${q.explanation}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-
-            renderMathKaTeX();
-        }
-
-        // Reset App
-        function resetApp() {
-            showGradeSelection();
-        }
-
-        // Render Math equations via KaTeX
-        function renderMathKaTeX() {
-            if (window.renderMathInElement) {
-                renderMathInElement(document.body, {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false}
-                    ],
-                    throwOnError : false
-                });
-            } else {
-                // Fallback manual rendering if KaTeX extension script is absent
-                document.querySelectorAll('#question-text, .option-card, #review-list').forEach(el => {
-                    // KaTeX auto-render fallback inline
-                });
-            }
-        }
-    </script>
-    <!-- Auto Render KaTeX script extension -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathKaTeX()"></script>
+    // Init
+    loadLessons();
+  </script>
 </body>
 </html>
